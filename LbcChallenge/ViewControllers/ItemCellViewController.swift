@@ -38,6 +38,8 @@ class ItemCellViewController : UITableViewCell {
     
     func setupImgPicture(){
         imgPicture = UIImageView(image: UIImage(named:"DefaultPicture")!)
+        imgPicture.layer.cornerRadius = 10
+        imgPicture.clipsToBounds = true
         contentView.addSubview(imgPicture)
         imgPicture.translatesAutoresizingMaskIntoConstraints = false
     }
@@ -56,6 +58,13 @@ class ItemCellViewController : UITableViewCell {
 
     func setupLblUrgent(){
         lblUrgent = UILabel()
+        lblUrgent.backgroundColor = .white
+        lblUrgent.layer.cornerRadius = 5
+        lblUrgent.clipsToBounds = true
+        lblUrgent.textColor = UIColor.orange
+        lblUrgent.font = lblUrgent.font.withSize(12)
+        lblUrgent.layer.borderWidth = 1
+        lblUrgent.layer.borderColor = UIColor.orange.cgColor
         contentView.addSubview(lblUrgent)
         lblUrgent.translatesAutoresizingMaskIntoConstraints = false
     }
@@ -68,10 +77,13 @@ class ItemCellViewController : UITableViewCell {
             "urgent" : lblUrgent,
             ] as [String : Any]
         
-        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[picture(100)]-[title]->=10-[price]|", options: [], metrics: nil, views: viewsDict))
-        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[picture(100)]-|", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[picture(100)]-[title]->=10-[price]|", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-5-[urgent]", options: [], metrics: nil, views: viewsDict))
+
+        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[picture(100)]->=1-|", options: [], metrics: nil, views: viewsDict))
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[title]", options: [], metrics: nil, views: viewsDict))
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[price]", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-5-[urgent]", options: [], metrics: nil, views: viewsDict))
     }
     
     
@@ -85,7 +97,12 @@ class ItemCellViewController : UITableViewCell {
         formatter.currencyCode = "EUR"
         formatter.locale = Locale(identifier: "fr-FR")
         lblPrice.text = formatter.string(from: NSNumber(value: viewModel.price)) ?? "n/a"
-        lblUrgent.text = viewModel.urgent ? "Urgent" : ""
+        lblUrgent.isHidden = !viewModel.urgent
+        if viewModel.urgent {
+            lblUrgent.text = " Urgent "
+            let bounds = CGRect(x: 0, y: 0, width: lblUrgent.bounds.width + 40, height: lblUrgent.bounds.height + 20)
+            lblUrgent.bounds = bounds
+        }
     }
 
 
@@ -99,7 +116,40 @@ extension ItemCellViewController : ItemCellViewModelProtocolDelegate {
     
     func imageReady(imageDownloaded: UIImage) {
         imgPicture.image = imageDownloaded
-        print("Image arrivée")
     }
+    
+}
+
+extension ItemCellViewController {
+    
+    func makeLabel(title:String, x:CGFloat, y:CGFloat, w:CGFloat, h:CGFloat)->UILabel{
+        var myLabel : UILabel = UILabel(frame: CGRect(x: x,y: y,width: w,height: h))
+        myLabel.textAlignment = NSTextAlignment.right
+
+         // inser last char to right
+         var titlePlus1char = "\(title)1"
+         myLabel.text = titlePlus1char
+        var titleSize:Int = titlePlus1char.count-1
+
+         myLabel.textColor = UIColor(red:1.0, green:1.0,blue:1.0,alpha:1.0)
+         myLabel.backgroundColor = UIColor(red: 214/255, green: 167/255, blue: 0/255,alpha:1.0)
+
+
+         // create myMutable String
+         var myMutableString = NSMutableAttributedString()
+
+         // create myMutable font
+        myMutableString = NSMutableAttributedString(string: titlePlus1char, attributes: [NSAttributedString.Key.font:UIFont(name: "HelveticaNeue", size: 20)!])
+
+         // set margin size
+        myMutableString.addAttribute(NSAttributedString.Key.font, value: UIFont(name: "HelveticaNeue", size: 10)!, range: NSRange(location: titleSize,length: 1))
+
+         // set last char to alpha 0
+        myMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor(red:1.0, green:1.0,blue:1.0,alpha:0), range: NSRange(location: titleSize,length: 1))
+
+         myLabel.attributedText = myMutableString
+
+         return myLabel
+     }
     
 }

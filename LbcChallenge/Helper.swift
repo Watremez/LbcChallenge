@@ -23,8 +23,12 @@ extension Bundle {
 
         let decoder = JSONDecoder()
 
-        guard let loaded = try? decoder.decode(T.self, from: data) else {
-            fatalError("Failed to decode \(fileUrl.absoluteString).")
+        var loaded : T
+        do {
+            loaded = try decoder.decode(T.self, from: data)
+            return loaded
+        } catch {
+            fatalError(error.localizedDescription)
         }
 
         return loaded

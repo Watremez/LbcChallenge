@@ -22,7 +22,7 @@ class ItemCellViewModel {
     
     weak var delegate : ItemCellViewModelProtocolDelegate? = nil
     
-    init(pictureUrl : String, category : ItemCategory, title : String, price : Double, urgent : Bool = false, delegate : ItemCellViewModelProtocolDelegate) {
+    init(pictureUrl : String?, category : ItemCategory, title : String, price : Double, urgent : Bool = false, delegate : ItemCellViewModelProtocolDelegate) {
         self.picture = UIImage(named: "DefaultPicture")!
         self.category = category
         self.title = title
@@ -30,10 +30,11 @@ class ItemCellViewModel {
         self.urgent = urgent
         self.delegate = delegate
         
-        guard let pictureUrl = URL(string: pictureUrl) else {
+        guard let urlString = pictureUrl,
+              let url = URL(string: urlString) else {
             return
         }
-        downloadImage(from: pictureUrl) { pictureData in
+        downloadImage(from: url) { pictureData in
             guard let image = UIImage(data: pictureData) else {
                 return
             }

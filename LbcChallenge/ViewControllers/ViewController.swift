@@ -11,7 +11,7 @@ class ViewController: UIViewController {
     
     var tableView : UITableView = UITableView()
     var safeArea: UILayoutGuide!
-    let items = Bundle.main.decodeJsonFile([Item].self, from: "SimplifiedData")
+    let items = Bundle.main.decodeJsonFile([Item].self, from: "data")
   
     override func loadView() {
         super.loadView()
@@ -58,7 +58,7 @@ extension ViewController : UITableViewDataSource {
         let data = items[indexPath.row]
         cell.initViewModel(
             ItemCellViewModel(
-                pictureUrl: data.images_url.small,
+                pictureUrl: data.images_url.thumb,
                 category: .automobile,
                 title: data.title,
                 price: data.price,

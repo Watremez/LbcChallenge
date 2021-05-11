@@ -14,16 +14,24 @@ class ImageUrls : Codable {
         case thumb = "thumb"
     }
     
-    var small : String
-    var thumb : String
+    var small : String?
+    var thumb : String?
     
     required init(from decoder : Decoder)throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.small = try container.decode(String.self, forKey: .small)
-        self.thumb = try container.decode(String.self, forKey: .thumb)
+        if container.contains(.small) {
+            self.small = try container.decode(String.self, forKey: .small)
+        } else {
+            self.small = nil
+        }
+        if container.contains(.thumb) {
+            self.thumb = try container.decode(String.self, forKey: .thumb)
+        } else {
+            self.thumb = nil
+        }
     }
     
-    init(small : String, thumb : String) {
+    init(small : String?, thumb : String?) {
         self.small = small
         self.thumb = thumb
     }
