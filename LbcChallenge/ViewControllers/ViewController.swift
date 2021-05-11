@@ -25,6 +25,7 @@ class ViewController: UIViewController {
     func setupTableView() {
         tableView.dataSource = self
         tableView.rowHeight = 120
+        tableView.separatorStyle = .none
         view.addSubview(tableView)
         tableView.register(ItemCellViewController.self, forCellReuseIdentifier: "cell")
         tableView.translatesAutoresizingMaskIntoConstraints = false

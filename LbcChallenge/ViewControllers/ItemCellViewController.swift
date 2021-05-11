@@ -40,6 +40,7 @@ class ItemCellViewController : UITableViewCell {
         imgPicture = UIImageView(image: UIImage(named:"DefaultPicture")!)
         imgPicture.layer.cornerRadius = 10
         imgPicture.clipsToBounds = true
+        imgPicture.backgroundColor = UIColor.lightGray
         contentView.addSubview(imgPicture)
         imgPicture.translatesAutoresizingMaskIntoConstraints = false
     }
