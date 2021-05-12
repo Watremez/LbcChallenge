@@ -16,6 +16,12 @@ class Category : Codable {
     
     var id : Int
     var name : String
+    
+    var ads : [Ad] {
+        Content.shared.ads.compactMap { oneAd in
+            oneAd.category_id == self.id ? oneAd : nil
+        }
+    }
 
     required init(from decoder : Decoder)throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

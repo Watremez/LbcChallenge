@@ -18,6 +18,7 @@ class ItemCellViewController : UITableViewCell {
     var lblPrice : UILabel!
     var lblUrgent : UILabel!
     var lblCategory : UILabel!
+    var lblDepositDate : UILabel!
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -32,6 +33,7 @@ class ItemCellViewController : UITableViewCell {
             setupLblPrice()
             setupLblUrgent()
             setupLblCategory()
+            setupLblDepositDate()
             
             setupPlacement()
             mPr_bInitialized = true
@@ -50,6 +52,9 @@ class ItemCellViewController : UITableViewCell {
     
     func setupLblTitle(){
         lblTitle = UILabel()
+        lblTitle.font = UIFont.preferredFont(forTextStyle: .headline)
+        lblTitle.numberOfLines = 0
+        lblTitle.lineBreakMode = .byWordWrapping
         contentView.addSubview(lblTitle)
         lblTitle.translatesAutoresizingMaskIntoConstraints = false
     }
@@ -57,6 +62,8 @@ class ItemCellViewController : UITableViewCell {
     func setupLblPrice(){
         lblPrice = UILabel()
         contentView.addSubview(lblPrice)
+        lblPrice.textColor = .orange
+        lblPrice.font = UIFont.preferredFont(forTextStyle: .headline)
         lblPrice.translatesAutoresizingMaskIntoConstraints = false
     }
 
@@ -66,7 +73,7 @@ class ItemCellViewController : UITableViewCell {
         lblUrgent.layer.cornerRadius = 5
         lblUrgent.clipsToBounds = true
         lblUrgent.textColor = UIColor.orange
-        lblUrgent.font = lblUrgent.font.withSize(12)
+        lblUrgent.font = UIFont.preferredFont(forTextStyle: .caption1)
         lblUrgent.layer.borderWidth = 1
         lblUrgent.layer.borderColor = UIColor.orange.cgColor
         contentView.addSubview(lblUrgent)
@@ -79,39 +86,46 @@ class ItemCellViewController : UITableViewCell {
         contentView.addSubview(lblCategory)
         lblCategory.translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
+    func setupLblDepositDate(){
+        lblDepositDate = UILabel()
+        lblDepositDate.font = UIFont.preferredFont(forTextStyle: .caption2)
+        lblDepositDate.textColor = .lightGray
+        contentView.addSubview(lblDepositDate)
+        lblDepositDate.translatesAutoresizingMaskIntoConstraints = false
+    }
+
     func setupPlacement() {
         let viewsDict = [
             "picture" : imgPicture,
             "title" : lblTitle,
             "price" : lblPrice,
             "urgent" : lblUrgent,
-            "category" : lblCategory
+            "category" : lblCategory,
+            "date" : lblDepositDate
             ] as [String : Any]
         
-        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-5-[picture(110)]-[title]->=5-[price]-5-|", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-5-[picture(110)]-5-[title]-5-|", options: [], metrics: nil, views: viewsDict))
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-10-[urgent]", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[picture]-[price]", options: [], metrics: nil, views: viewsDict))
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[picture]-[category]", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[picture]-[date]", options: [], metrics: nil, views: viewsDict))
 
-        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-5-[picture(110)]->=0-|", options: [], metrics: nil, views: viewsDict))
-        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[title]-5-[category]", options: [], metrics: nil, views: viewsDict))
-        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[price]", options: [], metrics: nil, views: viewsDict))
-        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-10-[urgent]", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-25-[picture(110)]-25-|", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-25-[title]-5-[price]-5-[category]-5-[date]", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-30-[urgent]", options: [], metrics: nil, views: viewsDict))
+        
     }
     
     
     func initViewModel(_ viewModel : ItemCellViewModel) {
-        let formatter = NumberFormatter()
-
         self.viewModel = viewModel
         imgPicture.image = viewModel.picture
         lblTitle.text = viewModel.title
         viewModel.category.map { lblCategory.text = $0.name }
         lblCategory.isHidden = viewModel.category == nil
-        formatter.numberStyle = .currency
-        formatter.currencyCode = "EUR"
-        formatter.locale = Locale(identifier: "fr-FR")
-        lblPrice.text = formatter.string(from: NSNumber(value: viewModel.price)) ?? "n/a"
+        lblPrice.text = viewModel.price
+        lblDepositDate.text = viewModel.depositDate
         lblUrgent.isHidden = !viewModel.urgent
         if viewModel.urgent {
             lblUrgent.text = " Urgent "

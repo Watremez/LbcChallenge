@@ -11,7 +11,6 @@ class ViewController: UIViewController {
     
     var tableView : UITableView = UITableView()
     var safeArea: UILayoutGuide!
-    var ads = [Ad]()
   
     override func loadView() {
         super.loadView()
@@ -21,8 +20,6 @@ class ViewController: UIViewController {
 
         Notification.Name.AdsDownloaded.onNotified { [weak self] note in
            guard let `self` = self else { return }
-            self.ads.removeAll()
-            self.ads.append(contentsOf: Content.shared.ads)
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -34,7 +31,7 @@ class ViewController: UIViewController {
     func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.rowHeight = 120
+        tableView.rowHeight = 160
         tableView.separatorStyle = .none
         view.addSubview(tableView)
         tableView.register(ItemCellViewController.self, forCellReuseIdentifier: "cell")
@@ -61,12 +58,13 @@ extension ViewController : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let ads = Content.shared.ads
         return ads.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ItemCellViewController
-        let data = ads[indexPath.row]
+        let data = Content.shared.ads[indexPath.row]
         cell.initViewModel(
             ItemCellViewModel(
                 pictureUrl: data.images_url.thumb,
@@ -74,6 +72,7 @@ extension ViewController : UITableViewDataSource {
                 title: data.title,
                 price: data.price,
                 urgent: data.is_urgent,
+                depositDate: data.creation_date,
                 delegate: cell)
         )
         return cell
