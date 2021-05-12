@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol ItemCellViewModelProtocolDelegate : class {
+protocol ItemCellViewModelProtocolDelegate : AnyObject {
     func imageReady(imageDownloaded : UIImage)
 }
 

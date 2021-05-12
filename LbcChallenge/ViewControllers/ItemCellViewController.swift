@@ -79,13 +79,13 @@ class ItemCellViewController : UITableViewCell {
             "urgent" : lblUrgent,
             ] as [String : Any]
         
-        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[picture(100)]-[title]->=10-[price]|", options: [], metrics: nil, views: viewsDict))
-        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-5-[urgent]", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-5-[picture(110)]-[title]->=5-[price]-5-|", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-10-[urgent]", options: [], metrics: nil, views: viewsDict))
 
-        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[picture(100)]->=1-|", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-5-[picture(110)]->=0-|", options: [], metrics: nil, views: viewsDict))
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[title]", options: [], metrics: nil, views: viewsDict))
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[price]", options: [], metrics: nil, views: viewsDict))
-        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-5-[urgent]", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-10-[urgent]", options: [], metrics: nil, views: viewsDict))
     }
     
     

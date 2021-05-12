@@ -24,6 +24,7 @@ class ViewController: UIViewController {
     
     func setupTableView() {
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.rowHeight = 120
         tableView.separatorStyle = .none
         view.addSubview(tableView)
@@ -69,11 +70,15 @@ extension ViewController : UITableViewDataSource {
         return cell
     }
     
-    
 }
 
 
 // MARK: - UITableViewDelegate
 extension ViewController : UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        // As soon as the cell is not displayed anymore then cancel its delegate because it could receive an old anychronous downloaded image.
+        (cell as! ItemCellViewController).viewModel.delegate = nil
+    }
     
 }

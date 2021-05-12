@@ -30,8 +30,6 @@ extension Bundle {
         } catch {
             fatalError(error.localizedDescription)
         }
-
-        return loaded
     }
 
     
