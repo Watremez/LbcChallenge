@@ -15,14 +15,14 @@ protocol ItemCellViewModelProtocolDelegate : AnyObject {
 class ItemCellViewModel {
     
     var picture : UIImage
-    var category : ItemCategory
+    var category : Category?
     var title : String
     var price : Double
     var urgent : Bool
     
     weak var delegate : ItemCellViewModelProtocolDelegate? = nil
     
-    init(pictureUrl : String?, category : ItemCategory, title : String, price : Double, urgent : Bool = false, delegate : ItemCellViewModelProtocolDelegate) {
+    init(pictureUrl : String?, category : Category?, title : String, price : Double, urgent : Bool = false, delegate : ItemCellViewModelProtocolDelegate) {
         self.picture = PictureCache.defaultImage
         self.category = category
         self.title = title
@@ -32,7 +32,9 @@ class ItemCellViewModel {
         
         self.picture = PictureCache.library.get(pictureUrl, updateImage: { imageDownloaded in
             if let myDelegate = self.delegate {
-                myDelegate.imageReady(imageDownloaded: imageDownloaded)
+                DispatchQueue.main.async {
+                    myDelegate.imageReady(imageDownloaded: imageDownloaded)
+                }
             }
         })
     }

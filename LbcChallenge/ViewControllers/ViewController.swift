@@ -11,13 +11,22 @@ class ViewController: UIViewController {
     
     var tableView : UITableView = UITableView()
     var safeArea: UILayoutGuide!
-    let items = Bundle.main.decodeJsonFile([Item].self, from: "data")
+    var ads = [Ad]()
   
     override func loadView() {
         super.loadView()
         view.backgroundColor = .white
         safeArea = view.layoutMarginsGuide
         setupTableView()
+
+        Notification.Name.AdsDownloaded.onNotified { [weak self] note in
+           guard let `self` = self else { return }
+            self.ads.removeAll()
+            self.ads.append(contentsOf: Content.shared.ads)
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
     }
     
     
@@ -52,16 +61,16 @@ extension ViewController : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        return ads.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ItemCellViewController
-        let data = items[indexPath.row]
+        let data = ads[indexPath.row]
         cell.initViewModel(
             ItemCellViewModel(
                 pictureUrl: data.images_url.thumb,
-                category: .automobile,
+                category: data.category,
                 title: data.title,
                 price: data.price,
                 urgent: data.is_urgent,

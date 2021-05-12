@@ -14,13 +14,11 @@ func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) 
 }
 
 
-func downloadImage(from url: URL, completion: @escaping (Data) -> ()) {
+func downloadData(from url: URL, completion: @escaping (Data) -> ()) {
     getData(from: url) { data, response, error in
         guard let data = data, error == nil else { return }
 
-        DispatchQueue.main.async() {
-            completion(data)
-        }
+        completion(data)
     }
 }
 

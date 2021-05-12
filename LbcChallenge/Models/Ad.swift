@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class Item : Codable {
+class Ad : Codable {
     private enum CodingKeys : String, CodingKey {
         case id = "id" // dans swift = dans json
         case category_id = "category_id"
@@ -28,6 +28,10 @@ class Item : Codable {
     var images_url : ImageUrls
     var creation_date : Date
     var is_urgent : Bool
+    
+    var category : Category? {
+        Content.shared.categoryFor(id: self.category_id)
+    }
 
     required init(from decoder : Decoder)throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

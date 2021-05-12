@@ -17,6 +17,7 @@ class ItemCellViewController : UITableViewCell {
     var lblTitle : UILabel!
     var lblPrice : UILabel!
     var lblUrgent : UILabel!
+    var lblCategory : UILabel!
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -30,6 +31,7 @@ class ItemCellViewController : UITableViewCell {
             setupLblTitle()
             setupLblPrice()
             setupLblUrgent()
+            setupLblCategory()
             
             setupPlacement()
             mPr_bInitialized = true
@@ -71,19 +73,28 @@ class ItemCellViewController : UITableViewCell {
         lblUrgent.translatesAutoresizingMaskIntoConstraints = false
     }
     
+    func setupLblCategory() {
+        lblCategory = UILabel()
+        lblCategory.font = lblCategory.font.withSize(8)
+        contentView.addSubview(lblCategory)
+        lblCategory.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
     func setupPlacement() {
         let viewsDict = [
             "picture" : imgPicture,
             "title" : lblTitle,
             "price" : lblPrice,
             "urgent" : lblUrgent,
+            "category" : lblCategory
             ] as [String : Any]
         
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-5-[picture(110)]-[title]->=5-[price]-5-|", options: [], metrics: nil, views: viewsDict))
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-10-[urgent]", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[picture]-[category]", options: [], metrics: nil, views: viewsDict))
 
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-5-[picture(110)]->=0-|", options: [], metrics: nil, views: viewsDict))
-        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[title]", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[title]-5-[category]", options: [], metrics: nil, views: viewsDict))
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[price]", options: [], metrics: nil, views: viewsDict))
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-10-[urgent]", options: [], metrics: nil, views: viewsDict))
     }
@@ -95,6 +106,8 @@ class ItemCellViewController : UITableViewCell {
         self.viewModel = viewModel
         imgPicture.image = viewModel.picture
         lblTitle.text = viewModel.title
+        viewModel.category.map { lblCategory.text = $0.name }
+        lblCategory.isHidden = viewModel.category == nil
         formatter.numberStyle = .currency
         formatter.currencyCode = "EUR"
         formatter.locale = Locale(identifier: "fr-FR")

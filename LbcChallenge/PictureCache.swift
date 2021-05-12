@@ -59,7 +59,7 @@ class PictureCache {
             self.pictures[urlString] = .error(.pictureUrlNotCorrectlyConstructed) // No more further try to download this picture.
             return Self.defaultImage
         }
-        downloadImage(from: url) { pictureData in
+        downloadData(from: url) { pictureData in
             guard let image = UIImage(data: pictureData) else {
                 // Image received isn't valid.
                 // Save the error and no update.
@@ -68,9 +68,7 @@ class PictureCache {
             }
             // Save the valid UIImage and update with it.
             self.pictures[urlString] = .downloaded(image)
-            DispatchQueue.main.async {
-                updateImage(image)
-            }
+            updateImage(image)
         }
         return Self.defaultImage
     }
