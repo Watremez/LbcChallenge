@@ -38,6 +38,7 @@ class ItemCellViewController : UITableViewCell {
     
     func setupImgPicture(){
         imgPicture = UIImageView(image: UIImage(named:"DefaultPicture")!)
+        imgPicture.contentMode = .scaleAspectFill
         imgPicture.layer.cornerRadius = 10
         imgPicture.clipsToBounds = true
         imgPicture.backgroundColor = UIColor.lightGray
@@ -118,39 +119,5 @@ extension ItemCellViewController : ItemCellViewModelProtocolDelegate {
     func imageReady(imageDownloaded: UIImage) {
         imgPicture.image = imageDownloaded
     }
-    
-}
-
-extension ItemCellViewController {
-    
-    func makeLabel(title:String, x:CGFloat, y:CGFloat, w:CGFloat, h:CGFloat)->UILabel{
-        var myLabel : UILabel = UILabel(frame: CGRect(x: x,y: y,width: w,height: h))
-        myLabel.textAlignment = NSTextAlignment.right
-
-         // inser last char to right
-         var titlePlus1char = "\(title)1"
-         myLabel.text = titlePlus1char
-        var titleSize:Int = titlePlus1char.count-1
-
-         myLabel.textColor = UIColor(red:1.0, green:1.0,blue:1.0,alpha:1.0)
-         myLabel.backgroundColor = UIColor(red: 214/255, green: 167/255, blue: 0/255,alpha:1.0)
-
-
-         // create myMutable String
-         var myMutableString = NSMutableAttributedString()
-
-         // create myMutable font
-        myMutableString = NSMutableAttributedString(string: titlePlus1char, attributes: [NSAttributedString.Key.font:UIFont(name: "HelveticaNeue", size: 20)!])
-
-         // set margin size
-        myMutableString.addAttribute(NSAttributedString.Key.font, value: UIFont(name: "HelveticaNeue", size: 10)!, range: NSRange(location: titleSize,length: 1))
-
-         // set last char to alpha 0
-        myMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor(red:1.0, green:1.0,blue:1.0,alpha:0), range: NSRange(location: titleSize,length: 1))
-
-         myLabel.attributedText = myMutableString
-
-         return myLabel
-     }
     
 }

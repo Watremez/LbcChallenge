@@ -23,26 +23,18 @@ class ItemCellViewModel {
     weak var delegate : ItemCellViewModelProtocolDelegate? = nil
     
     init(pictureUrl : String?, category : ItemCategory, title : String, price : Double, urgent : Bool = false, delegate : ItemCellViewModelProtocolDelegate) {
-        self.picture = UIImage(named: "DefaultPicture")!
+        self.picture = PictureCache.defaultImage
         self.category = category
         self.title = title
         self.price = price
         self.urgent = urgent
         self.delegate = delegate
         
-        guard let urlString = pictureUrl,
-              let url = URL(string: urlString) else {
-            return
-        }
-        downloadImage(from: url) { pictureData in
-            guard let image = UIImage(data: pictureData) else {
-                return
-            }
-            self.picture = image
+        self.picture = PictureCache.library.get(pictureUrl, updateImage: { imageDownloaded in
             if let myDelegate = self.delegate {
-                myDelegate.imageReady(imageDownloaded: self.picture)
+                myDelegate.imageReady(imageDownloaded: imageDownloaded)
             }
-        }
+        })
     }
     
 }

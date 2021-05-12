@@ -21,6 +21,7 @@
 		91E59EE8264A7EFC0073319B /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E59EE7264A7EFC0073319B /* Helper.swift */; };
 		91E59EEE264A81D60073319B /* SimplifiedData.json in Resources */ = {isa = PBXBuildFile; fileRef = 91E59EED264A81D60073319B /* SimplifiedData.json */; };
 		91E59EF0264A91E40073319B /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E59EEF264A91E40073319B /* Network.swift */; };
+		91F75BD8264BB1C800D3CB33 /* PictureCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75BD7264BB1C800D3CB33 /* PictureCache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		91E59EE7264A7EFC0073319B /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		91E59EED264A81D60073319B /* SimplifiedData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SimplifiedData.json; sourceTree = "<group>"; };
 		91E59EEF264A91E40073319B /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		91F75BD7264BB1C800D3CB33 /* PictureCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureCache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 				91E59EC42649969D0073319B /* AppDelegate.swift */,
 				91E59EC62649969D0073319B /* SceneDelegate.swift */,
 				91E59EEF264A91E40073319B /* Network.swift */,
+				91F75BD7264BB1C800D3CB33 /* PictureCache.swift */,
 				91E59EE9264A7FFE0073319B /* ViewControllers */,
 				91E59EEA264A80240073319B /* ViewModels */,
 				91E59EE4264A7C8D0073319B /* Models */,
@@ -195,6 +198,7 @@
 				91E59EE8264A7EFC0073319B /* Helper.swift in Sources */,
 				91E59EC52649969D0073319B /* AppDelegate.swift in Sources */,
 				91E59EC72649969D0073319B /* SceneDelegate.swift in Sources */,
+				91F75BD8264BB1C800D3CB33 /* PictureCache.swift in Sources */,
 				91E59EDB264A62B50073319B /* ItemCellViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
