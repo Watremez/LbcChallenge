@@ -42,6 +42,7 @@ class AdDetailVc : UIViewController {
         }
         
         if let svc = self.splitViewController {
+            // Permet d'avoir le bouton back sur la vue détail.
             let ni = self.navigationItem
             ni.setLeftBarButton(svc.displayModeButtonItem, animated: false)
             ni.leftItemsSupplementBackButton = true ;

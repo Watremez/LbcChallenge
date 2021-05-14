@@ -26,6 +26,9 @@
 		91F75C11264D1E8600D3CB33 /* AdDetailVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75C10264D1E8600D3CB33 /* AdDetailVc.swift */; };
 		91F75C13264D1F7A00D3CB33 /* AdDetailVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75C12264D1F7A00D3CB33 /* AdDetailVm.swift */; };
 		91F75C15264D26E500D3CB33 /* AdDetailV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75C14264D26E500D3CB33 /* AdDetailV.swift */; };
+		91F75C17264D7F5300D3CB33 /* CategoryTableVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75C16264D7F5200D3CB33 /* CategoryTableVc.swift */; };
+		91F75C19264E541E00D3CB33 /* CategoryCellVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75C18264E541D00D3CB33 /* CategoryCellVm.swift */; };
+		91F75C1B264E558100D3CB33 /* CategoryCellV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75C1A264E558100D3CB33 /* CategoryCellV.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +53,9 @@
 		91F75C10264D1E8600D3CB33 /* AdDetailVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdDetailVc.swift; sourceTree = "<group>"; };
 		91F75C12264D1F7A00D3CB33 /* AdDetailVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdDetailVm.swift; sourceTree = "<group>"; };
 		91F75C14264D26E500D3CB33 /* AdDetailV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdDetailV.swift; sourceTree = "<group>"; };
+		91F75C16264D7F5200D3CB33 /* CategoryTableVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableVc.swift; sourceTree = "<group>"; };
+		91F75C18264E541D00D3CB33 /* CategoryCellVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCellVm.swift; sourceTree = "<group>"; };
+		91F75C1A264E558100D3CB33 /* CategoryCellV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCellV.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +122,7 @@
 				91F75C0E264D1E0C00D3CB33 /* SplitVc.swift */,
 				91E59EC82649969D0073319B /* AdTableVc.swift */,
 				91F75C10264D1E8600D3CB33 /* AdDetailVc.swift */,
+				91F75C16264D7F5200D3CB33 /* CategoryTableVc.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -125,6 +132,7 @@
 			children = (
 				91E59EDA264A62B50073319B /* AdCellVm.swift */,
 				91F75C12264D1F7A00D3CB33 /* AdDetailVm.swift */,
+				91F75C18264E541D00D3CB33 /* CategoryCellVm.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -134,6 +142,7 @@
 			children = (
 				91E59ED8264A60C60073319B /* AdCellV.swift */,
 				91F75C14264D26E500D3CB33 /* AdDetailV.swift */,
+				91F75C1A264E558100D3CB33 /* CategoryCellV.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -212,8 +221,11 @@
 				91E59EE1264A7BB90073319B /* ImageUrls.swift in Sources */,
 				91E59ED9264A60C70073319B /* AdCellV.swift in Sources */,
 				91F75C0F264D1E0C00D3CB33 /* SplitVc.swift in Sources */,
+				91F75C17264D7F5300D3CB33 /* CategoryTableVc.swift in Sources */,
+				91F75C1B264E558100D3CB33 /* CategoryCellV.swift in Sources */,
 				91E59EC92649969D0073319B /* AdTableVc.swift in Sources */,
 				91E59EE3264A7C7E0073319B /* Ad.swift in Sources */,
+				91F75C19264E541E00D3CB33 /* CategoryCellVm.swift in Sources */,
 				91F75C13264D1F7A00D3CB33 /* AdDetailVm.swift in Sources */,
 				91E59EE8264A7EFC0073319B /* Helper.swift in Sources */,
 				91F75C11264D1E8600D3CB33 /* AdDetailVc.swift in Sources */,

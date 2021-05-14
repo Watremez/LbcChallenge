@@ -12,11 +12,6 @@ class SplitVc : UISplitViewController {
     
     override func loadView() {
         super.loadView()
-        let master = UINavigationController()
-        let detail = UINavigationController()
-        master.viewControllers = [AdTableVc()]
-        detail.viewControllers = [AdDetailVc()]
-        self.viewControllers = [master, detail]
     }
     
 }

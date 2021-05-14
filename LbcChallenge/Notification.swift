@@ -10,7 +10,8 @@ import Foundation
 
 extension Notification.Name {
     static let AdsDownloaded = Notification.Name("Ads downloaded")
-  
+    static let CategoriesDownloaded = Notification.Name("Categories downloaded")
+
     func post(object: Any? = nil, userInfo: [AnyHashable : Any]? = nil) {
         NotificationCenter.default.post(name: self, object: object, userInfo: userInfo)
     }

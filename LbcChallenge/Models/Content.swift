@@ -17,6 +17,7 @@ class Content {
     private init(from url : String) {
         Bundle.main.decodeJsonFromUrl([Category].self, from: url + "categories.json") { categories in
             self.categories.append(contentsOf: categories)
+            Notification.Name.CategoriesDownloaded.post()
             Bundle.main.decodeJsonFromUrl([Ad].self, from: url + "listing.json") { ads in
                 self.ads.append(contentsOf: ads.sorted(by: { ad1, ad2 in
                     if ad1.is_urgent == ad2.is_urgent {

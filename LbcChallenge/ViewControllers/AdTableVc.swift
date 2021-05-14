@@ -24,9 +24,20 @@ class AdTableVc: UIViewController {
                 self.tableView.reloadData()
             }
         }
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Filtrer", style: .plain, target: self, action: #selector(OnFliterClick))
     }
     
-    
+    @objc func OnFliterClick(){
+        
+        let vc = CategoryTableVc()
+        
+        let nc = UINavigationController()
+        nc.viewControllers = [vc]
+        
+        self.showDetailViewController(nc, sender: self)
+        
+    }
     
     func setupTableView() {
         tableView.dataSource = self
@@ -82,6 +93,8 @@ extension AdTableVc : UITableViewDataSource {
 
 
 // MARK: - UITableViewDelegate
+
+
 extension AdTableVc : UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
