@@ -10,11 +10,29 @@ import UIKit
 
 
 class CategoryCellVm {
-    var name : String
-    var activated : Bool
     
-    init(name:  String, activated : Bool) {
-        self.name = name
-        self.activated = activated
+    private var categoryUpdated : (() -> ()) = { }
+    
+    private(set) var category : Category! {
+        didSet {
+            self.categoryUpdated()
+        }
     }
+    
+    init(categoryAtIndex index:Int, onCategoryUpdate : (() -> ())?) {
+        
+        onCategoryUpdate.map { callBack in
+            self.categoryUpdated = callBack
+        }
+        
+        self.loadData(index: index)
+        
+    }
+    
+    private func loadData(index: Int) {
+        if index >= 0 {
+            self.category = Content.shared.categories[index]
+        }
+    }
+    
 }

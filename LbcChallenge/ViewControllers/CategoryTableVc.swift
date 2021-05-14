@@ -13,6 +13,8 @@ class CategoryTableVc: UIViewController {
     var tableView : UITableView = UITableView()
     var safeArea: UILayoutGuide!
     
+    private var categoriesVm : CategoriesVm!
+    
     override func viewWillAppear(_ animated: Bool) {
         
         self.title = "Filtrer les catégories d'annonces"
@@ -33,13 +35,15 @@ class CategoryTableVc: UIViewController {
         view.backgroundColor = .white
         safeArea = view.layoutMarginsGuide
         setupTableView()
-
-        Notification.Name.CategoriesDownloaded.onNotified { [weak self] note in
-           guard let `self` = self else { return }
+        callToViewModelForUIUpdate()
+    }
+    
+    func callToViewModelForUIUpdate() {
+        categoriesVm = CategoriesVm(onCategoriesUpdate: {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
-        }
+        })
     }
     
     
@@ -72,19 +76,13 @@ extension CategoryTableVc : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let categories = Content.shared.categories
-        return categories.count
+        return categoriesVm.categories.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let oneCategory = Content.shared.categories[indexPath.row]
+        let oneCategory = categoriesVm.categories[indexPath.row]
         let categoryCellV = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as! CategoryCellV
-        categoryCellV.initViewModel(
-            CategoryCellVm(
-                name: oneCategory.name,
-                activated: true
-            )
-        )
+        categoryCellV.index = indexPath.row
         return categoryCellV
     }
     

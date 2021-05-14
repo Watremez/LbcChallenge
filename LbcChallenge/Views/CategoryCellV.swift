@@ -11,11 +11,15 @@ import UIKit
 class CategoryCellV : UITableViewCell {
     // Outlets
     var lblName : UILabel!
-    var chkActivated : UISwitch!
 
     // Members
     private var mPr_bInitialized : Bool = false
-    var viewModel : CategoryCellVm!
+    private var categoryCellVm : CategoryCellVm!
+    var index : Int = -1 {
+        didSet {
+            callToViewModelForUIUpdate()
+        }
+    }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -26,13 +30,22 @@ class CategoryCellV : UITableViewCell {
 
         if !mPr_bInitialized {
             setupLblName()
-            setupchkActivated()
             
             setupPlacement()
             mPr_bInitialized = true
         }
     }
     
+    func callToViewModelForUIUpdate() {
+        categoryCellVm = CategoryCellVm(
+            categoryAtIndex: self.index,
+            onCategoryUpdate: {
+                DispatchQueue.main.async {
+                    self.lblName.text = self.categoryCellVm.category.name
+                }
+            })
+    }
+
     func setupLblName(){
         lblName = UILabel()
         contentView.addSubview(lblName)
@@ -40,32 +53,15 @@ class CategoryCellV : UITableViewCell {
     }
     
     
-    func setupchkActivated(){
-        chkActivated = UISwitch()
-        contentView.addSubview(chkActivated)
-        chkActivated.translatesAutoresizingMaskIntoConstraints = false
-        chkActivated.addTarget(self, action: <#T##Selector#>, for: <#T##UIControl.Event#>)
-    }
-    
-    
     func setupPlacement(){
         let viewsDict = [
-            "name" : lblName,
-            "activated" : chkActivated
+            "name" : lblName
             ] as [String : Any]
         
-        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[name]-[activated]-|", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[name]-|", options: [], metrics: nil, views: viewsDict))
 
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[name]-|", options: [], metrics: nil, views: viewsDict))
-        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[activated]-|", options: [], metrics: nil, views: viewsDict))
 
-    }
-    
-    
-    func initViewModel(_ viewModel : CategoryCellVm) {
-        self.viewModel = viewModel
-        lblName.text = viewModel.name
-        chkActivated.setOn(viewModel.activated, animated: false)
     }
 
     

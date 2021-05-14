@@ -10,27 +10,35 @@ import UIKit
 class AdTableVc: UIViewController {
     
     var tableView : UITableView = UITableView()
+    var navigationBar : UINavigationBar = UINavigationBar()
     var safeArea: UILayoutGuide!
-  
+
+    private var adsVm : AdsVm!
+    private var categoryFilterVm : CategoryFilterVm  = CategoryFilterVm()
+
     override func loadView() {
         super.loadView()
         view.backgroundColor = .white
         safeArea = view.layoutMarginsGuide
         setupTableView()
-
-        Notification.Name.AdsDownloaded.onNotified { [weak self] note in
-           guard let `self` = self else { return }
+        setupNavigationBar()
+        setupPlacement()
+        
+        callToViewModelForUIUpdate()
+    }
+    
+    func callToViewModelForUIUpdate() {
+        adsVm = AdsVm(onAdsUpdate: {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
-        }
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Filtrer", style: .plain, target: self, action: #selector(OnFliterClick))
+        })
     }
-    
+
     @objc func OnFliterClick(){
         
-        let vc = CategoryTableVc()
+        let vc = CategoryFilterVc()
+        vc.categoryFilterVm = self.categoryFilterVm
         
         let nc = UINavigationController()
         nc.viewControllers = [vc]
@@ -47,14 +55,53 @@ class AdTableVc: UIViewController {
         view.addSubview(tableView)
         tableView.register(AdCellV.self, forCellReuseIdentifier: "adCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: safeArea.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
-        ])
+    }
+    
+    func setupNavigationBar() {
+        let btnFiltrer = UIBarButtonItem(title: "Filtrer", style: .plain, target: self, action: #selector(OnFliterClick))
+        if #available(iOS 13.0, *){
+            view.addSubview(navigationBar)
+            navigationBar.translatesAutoresizingMaskIntoConstraints = false
+            let navigationItem = UINavigationItem()
+            navigationItem.rightBarButtonItem = btnFiltrer
+            navigationBar.items = [navigationItem]
+        } else {
+            navigationItem.rightBarButtonItem = btnFiltrer
+        }
     }
 
+    func setupPlacement() {
+        
+        if #available(iOS 13.0, *){
+            NSLayoutConstraint.activate([
+                navigationBar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+                navigationBar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+                navigationBar.topAnchor.constraint(equalTo: safeArea.topAnchor),
+                
+                navigationBar.bottomAnchor.constraint(equalTo: tableView.topAnchor),
+                
+                tableView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
+                tableView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+                tableView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor)
+            ])
+            
+//            let viewsDict : [String : Any] = [
+//                "ads" : tableView,
+//                "nav" : navigationBar
+//                ]
+//            self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[nav]", options: [], metrics: nil, views: viewsDict))
+        } else {
+            NSLayoutConstraint.activate([
+                tableView.topAnchor.constraint(equalTo: safeArea.topAnchor),
+                tableView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
+                tableView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+                tableView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor)
+            ])
+        }
+
+
+
+    }
 
 }
 
@@ -69,12 +116,11 @@ extension AdTableVc : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let ads = Content.shared.ads
-        return ads.count
+        return adsVm.ads.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let oneAd = Content.shared.ads[indexPath.row]
+        let oneAd = adsVm.ads[indexPath.row]
         let adCellV = tableView.dequeueReusableCell(withIdentifier: "adCell", for: indexPath) as! AdCellV
         adCellV.initViewModel(
             AdCellVm(
@@ -105,7 +151,7 @@ extension AdTableVc : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let vc = AdDetailVc()
-        let oneAd = Content.shared.ads[indexPath.row]
+        let oneAd = adsVm.ads[indexPath.row]
         let oneAdViewModel = AdDetailVm(
             pictureUrl: oneAd.images_url.small,
             category: oneAd.category,
