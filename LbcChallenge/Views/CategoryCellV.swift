@@ -54,9 +54,9 @@ class CategoryCellV : UITableViewCell {
     
     
     func setupPlacement(){
-        let viewsDict = [
-            "name" : lblName
-            ] as [String : Any]
+        let viewsDict : [String : Any] = [
+            "name" : (lblName as Any)
+            ]
         
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[name]-|", options: [], metrics: nil, views: viewsDict))
 

@@ -34,9 +34,9 @@ class AdDetailVc : UIViewController {
             self.detailView.initViewModel(self.viewModel)
             self.view.addSubview(self.detailView)
             self.detailView.translatesAutoresizingMaskIntoConstraints = false
-            let viewsDict = [
-                "detailView" : self.detailView
-                ] as [String : Any]
+            let viewsDict : [String : Any] = [
+                "detailView" : (detailView as Any)
+                ]
             self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[detailView]|", options: [], metrics: nil, views: viewsDict))
             self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(\(barHeight))-[detailView]|", options: [], metrics: nil, views: viewsDict))
         }

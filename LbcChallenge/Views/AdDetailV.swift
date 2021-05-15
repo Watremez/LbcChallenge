@@ -118,16 +118,16 @@ class AdDetailV : UIView {
 
 
     func setupPlacement() {
-        let viewsDict = [
-            "picture" : imgPicture,
-            "title" : lblTitle,
-            "price" : lblPrice,
-            "urgent" : lblUrgent,
-            "category" : lblCategory,
-            "date" : lblDepositDate,
-            "description" : lblDescription,
-            "descriptionContent" : mnoDescriptionContent
-            ] as [String : Any]
+        let viewsDict : [String : Any] = [
+            "picture" : (imgPicture as Any),
+            "title" : (lblTitle as Any),
+            "price" : (lblPrice as Any),
+            "urgent" : (lblUrgent as Any),
+            "category" : (lblCategory as Any),
+            "date" : (lblDepositDate as Any),
+            "description" : (lblDescription as Any),
+            "descriptionContent" : (mnoDescriptionContent as Any)
+            ]
         
         self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[picture]|", options: [], metrics: nil, views: viewsDict))
         self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[title]-|", options: [], metrics: nil, views: viewsDict))

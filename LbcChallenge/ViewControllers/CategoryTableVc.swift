@@ -80,7 +80,7 @@ extension CategoryTableVc : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let oneCategory = categoriesVm.categories[indexPath.row]
+        _ = categoriesVm.categories[indexPath.row]
         let categoryCellV = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as! CategoryCellV
         categoryCellV.index = indexPath.row
         return categoryCellV

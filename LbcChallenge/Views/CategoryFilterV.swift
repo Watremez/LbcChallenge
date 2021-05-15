@@ -66,9 +66,9 @@ class CategoryFilterV : UIView {
         picker.translatesAutoresizingMaskIntoConstraints = false
         var bPickedPresetDone : Bool = false
         if let selectedCategory = self.categoryFilterVm.categorySelected {
-            if let index = self.categoryFilterVm.categories.firstIndex { oneCategory in
+            if let index = self.categoryFilterVm.categories.firstIndex(where: { oneCategory in
                 oneCategory.id == selectedCategory.id
-            } {
+            }) {
                 picker.selectRow(index + 1, inComponent: 0, animated: false)
                 bPickedPresetDone = true
             }

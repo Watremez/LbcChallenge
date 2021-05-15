@@ -97,14 +97,14 @@ class AdCellV : UITableViewCell {
     }
 
     func setupPlacement() {
-        let viewsDict = [
-            "picture" : imgPicture,
-            "title" : lblTitle,
-            "price" : lblPrice,
-            "urgent" : lblUrgent,
-            "category" : lblCategory,
-            "date" : lblDepositDate
-            ] as [String : Any]
+        let viewsDict : [String : Any] = [
+            "picture" : (imgPicture as Any),
+            "title" : (lblTitle as Any),
+            "price" : (lblPrice as Any),
+            "urgent" : (lblUrgent as Any),
+            "category" : (lblCategory as Any),
+            "date" : (lblDepositDate as Any)
+            ]
         
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-5-[picture(110)]-5-[title]-5-|", options: [], metrics: nil, views: viewsDict))
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-10-[urgent]", options: [], metrics: nil, views: viewsDict))

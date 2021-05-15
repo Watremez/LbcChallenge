@@ -36,10 +36,4 @@ class ImageUrls : Codable {
         self.thumb = thumb
     }
     
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(self.small, forKey: .small)
-        try container.encode(self.thumb, forKey: .thumb)
-    }
-    
 }
