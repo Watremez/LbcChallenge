@@ -9,28 +9,12 @@ import Foundation
 import UIKit
 
 class Content {
-    static let shared = Content(from: "https://raw.githubusercontent.com/leboncoin/paperclip/master/")
+    static let shared = Content()
     
     var categories = [Category]()
     var ads = [Ad]()
     
-    private init(from url : String) {
-        Bundle.main.decodeJsonFromUrl([Category].self, from: url + "categories.json") { categories in
-            self.categories.append(contentsOf: categories)
-            Notification.Name.CategoriesDownloaded.post()
-            Bundle.main.decodeJsonFromUrl([Ad].self, from: url + "listing.json") { ads in
-                self.ads.append(contentsOf: ads.sorted(by: { ad1, ad2 in
-                    if ad1.is_urgent == ad2.is_urgent {
-                        return ad1.creation_date >= ad2.creation_date
-                    } else if ad1.is_urgent {
-                        return true
-                    } else {
-                        return false
-                    }
-                }))
-                Notification.Name.AdsDownloaded.post()                
-            }
-        }
+    private init() {
     }
     
     func adFor(id : Int) -> Ad? {

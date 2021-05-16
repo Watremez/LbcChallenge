@@ -9,11 +9,6 @@ import Foundation
 import UIKit
 
 
-
-protocol AsynchronousImageDisplayer : AnyObject {
-    func imageReady(imageDownloaded : UIImage)
-}
-
 enum PictureDownloadError : Error {
     case pictureUrlNotCorrectlyConstructed
     case receivedImageNotValid
@@ -24,6 +19,7 @@ enum PictureCacheStatus {
     case error(PictureDownloadError)
 }
 
+// This class is for being used with the singleton "library". (and also for some default images)
 class PictureCache {
     
     static let library = PictureCache()
@@ -31,6 +27,7 @@ class PictureCache {
     static var defaultImage = UIImage(named: "DefaultPicture")!
     static var noImage = UIImage(named: "NoPicture")!
     static var brokenImage = UIImage(named: "BrokenPicture")!
+    static var downloadError = UIImage(named: "DownloadError")!
 
     private var pictures = [String : PictureCacheStatus]()
     
@@ -38,7 +35,7 @@ class PictureCache {
         
     }
     
-    func get(_ pictureUrl : String?, updateImage: @escaping (UIImage) -> ()) -> UIImage {
+    func get(withApi apiService: ApiServiceProtocol? = nil, atUrlString pictureUrl : String?, updateImage: @escaping (UIImage) -> ()) -> UIImage {
 
         guard let urlString = pictureUrl else {
             // If no pictureUrl has been provided,
@@ -47,6 +44,8 @@ class PictureCache {
         }
         
         // We have now a valid picture URL.
+// It sometimes crashes here. I guess it is something related to multitasking shared resource access (pictures dictionary).
+// I hadn't enought time to investigate the problem so I simply skipped the caching part itself. The PictureCache class still provide images on demand. It simply re-download them everytime.
         // Let's check if it has already been requested before.
 //        if let status = pictures[urlString] {
 //            // The picture has already been requested before.
@@ -60,25 +59,25 @@ class PictureCache {
 //        }
         
         
-        // The picture has never beel requested before.
-        guard let url = URL(string: urlString) else {
-            // If urlString wasn't constructed correctly,
-            // then save the error and return default image.
-//            self.pictures[urlString] = .error(.pictureUrlNotCorrectlyConstructed) // No more further try to download this picture.
-            return Self.badUrl
-        }
-        downloadData(from: url) { pictureData in
-            guard let image = UIImage(data: pictureData) else {
-                // Image received isn't valid.
-                // Save the error and no update.
-//                self.pictures[urlString] = .error(.receivedImageNotValid) // No more further try to download this picture.
+        // The picture has never been requested before.
+        let api = apiService ?? ApiService()
+        api.downloadImage(from: urlString) { result in
+            switch result {
+            case .success(let image) :
+                updateImage(image)
+            case .wrongImageFormat:
                 updateImage(Self.brokenImage)
-                return
+            case .wrongUrlFormat:
+                updateImage(Self.badUrl)
+            case .wrongDownload:
+                updateImage(Self.downloadError)
+            default:
+                // All cases for downloadImage have been treated.
+                // Something might be improved here since we must detect by ourselves which status can be returned...
+                break
             }
-            // Save the valid UIImage and update with it.
-//            self.pictures[urlString] = .downloaded(image)
-            updateImage(image)
         }
+        
         return Self.defaultImage
     }
     

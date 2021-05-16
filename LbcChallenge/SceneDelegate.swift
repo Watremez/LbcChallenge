@@ -27,7 +27,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = AdTableVc()
+
+        var mainViewController : SplitVc
+        mainViewController = SplitVc()
+
+        let master = UINavigationController()
+        let detail = UINavigationController()
+        master.viewControllers = [AdTableVc()] // in AdTableVc is instanciated the main ViewModel : AppVm
+        detail.viewControllers = [AdDetailVc()]
+        mainViewController.viewControllers = [master, detail]
+        mainViewController.preferredDisplayMode = .oneBesideSecondary
+
+
+        window?.rootViewController = mainViewController
         window?.makeKeyAndVisible()
     }
     

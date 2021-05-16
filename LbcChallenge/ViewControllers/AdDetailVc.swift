@@ -13,32 +13,24 @@ class AdDetailVc : UIViewController {
     var detailView : AdDetailV!
 
     // Members
-    var viewModel : AdDetailVm = AdDetailVm.empty
+    var vm : AdDetailVm? = nil
     
     override func viewWillAppear(_ animated: Bool) {
         self.edgesForExtendedLayout = []
 
-        if viewModel.empty {
+        
+        if self.vm == nil {
             self.title = ""
             self.view.backgroundColor = UIColor.lightGray
             self.detailView.map({ $0.removeFromSuperview() })
         } else {
-//            let barHeight : Int = Int(self.navigationController!.navigationBar.frame.height + self.additionalSafeAreaInsets.bottom)
-            let barHeight : Int = 0
-
-            self.title = viewModel.title
-            self.view.backgroundColor = UIColor.white
-            self.viewModel.navBarHeight = barHeight
-
-            self.detailView = AdDetailV()
-            self.detailView.initViewModel(self.viewModel)
             self.view.addSubview(self.detailView)
             self.detailView.translatesAutoresizingMaskIntoConstraints = false
             let viewsDict : [String : Any] = [
                 "detailView" : (detailView as Any)
                 ]
             self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[detailView]|", options: [], metrics: nil, views: viewsDict))
-            self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(\(barHeight))-[detailView]|", options: [], metrics: nil, views: viewsDict))
+            self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[detailView]|", options: [], metrics: nil, views: viewsDict))
         }
         
         if let svc = self.splitViewController {
@@ -50,20 +42,15 @@ class AdDetailVc : UIViewController {
         
         super.viewWillAppear(animated)
     }
-}
-
-
-
-// MARK: - AsynchronousImageDisplayer
-
-extension AdDetailVc : AsynchronousImageDisplayer {
     
     
-    func imageReady(imageDownloaded: UIImage) {
-        self.viewModel.picture = imageDownloaded
-        self.detailView.map({
-            $0.imgPicture.image = imageDownloaded
-        })
+    func setup(vm: AdDetailVm) {
+        self.vm = vm
+        self.title = self.vm!.title
+        self.view.backgroundColor = UIColor.white
+        self.detailView = AdDetailV()
+        self.detailView.setup(vm: self.vm!)
     }
+
     
 }

@@ -35,10 +35,10 @@ class CategoryTableVc: UIViewController {
         view.backgroundColor = .white
         safeArea = view.layoutMarginsGuide
         setupTableView()
-        callToViewModelForUIUpdate()
+        updateViewBasedOnViewModel()
     }
     
-    func callToViewModelForUIUpdate() {
+    func updateViewBasedOnViewModel() {
         categoriesVm = CategoriesVm(onCategoriesUpdate: {
             DispatchQueue.main.async {
                 self.tableView.reloadData()

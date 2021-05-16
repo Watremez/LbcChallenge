@@ -2,74 +2,51 @@
 //  AdDetailVm.swift
 //  LbcChallenge
 //
-//  Created by Jean-baptiste Watremez on 13/05/2021.
+//  Created by Jean-baptiste Watremez on 16/05/2021.
 //
 
 import Foundation
 import UIKit
 
+class AdDetailVm{
 
-class AdDetailVm {
+    let apiService: ApiServiceProtocol
+
+    private var thumbPictureUrl : String?
+    private var smallPictureUrl : String?
+    let thumbPicture : Observable<UIImage>
+    let smallPicture : Observable<UIImage>
+    let category : String
+    let title : String
+    let price : String
+    let urgent : Bool
+    let depositDate : String
+    let description : String
+
     
-    var picture : UIImage
-    var category : Category?
-    var title : String
-    var price : String
-    var urgent : Bool
-    var depositDate : String
-    var description : String
-    var navBarHeight : Int?
-    var empty : Bool
-    
-    
-    weak var oneViewThatUsesThisViewModel : AsynchronousImageDisplayer? = nil
-    
-    private init(){
-        self.picture = PictureCache.defaultImage
-        self.category = nil
-        self.title = ""
-        self.price = ""
-        self.urgent = false
-        self.empty = true
-        self.depositDate = ""
-        self.description = ""
-        self.oneViewThatUsesThisViewModel = nil
-    }
-    static let empty = AdDetailVm()
-    
-    init(pictureUrl : String?, category : Category?, title : String, price : Double, urgent : Bool, depositDate : Date, description : String, viewThatUsesThisViewModel : AsynchronousImageDisplayer) {
-        let locale = Locale(identifier: "fr-FR")
-        
-        self.picture = PictureCache.defaultImage
-        self.category = category
+    init(apiService: ApiServiceProtocol = ApiService(), title: String, category: String, price: String, depositeDate: String, urgent: Bool, description: String, thumbPictureUrl: String?, smallPictureUrl: String?) {
+        self.apiService = apiService
         self.title = title
-        
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .currency
-        numberFormatter.currencyCode = "EUR"
-        numberFormatter.locale = locale
-        self.price = numberFormatter.string(from: NSNumber(value: price)) ?? "n/a"
-        
+        self.category = category
+        self.price = price
         self.urgent = urgent
-        self.empty = false
-
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = locale
-        dateFormatter.dateStyle = .full
-        dateFormatter.timeStyle = .medium
-        self.depositDate = dateFormatter.string(from: depositDate)
-        
+        self.depositDate = depositeDate
         self.description = description
-        
-        self.oneViewThatUsesThisViewModel = viewThatUsesThisViewModel
-
-        self.picture = PictureCache.library.get(pictureUrl, updateImage: { imageDownloaded in
-            if let myDelegate = self.oneViewThatUsesThisViewModel {
-                DispatchQueue.main.async {
-                    myDelegate.imageReady(imageDownloaded: imageDownloaded)
-                }
-            }
+        self.thumbPictureUrl = thumbPictureUrl
+        self.thumbPicture = Observable<UIImage>(initialValue: PictureCache.defaultImage)
+        self.smallPictureUrl = smallPictureUrl
+        self.smallPicture = Observable<UIImage>(initialValue: PictureCache.defaultImage)
+        self.thumbPicture.value = PictureCache.library.get(withApi: self.apiService, atUrlString: self.thumbPictureUrl, updateImage: { image in
+            self.thumbPicture.value = image
+        })
+        self.smallPicture.value = PictureCache.library.get(withApi: self.apiService, atUrlString: self.smallPictureUrl, updateImage: { image in
+            self.smallPicture.value = image
         })
     }
     
+    func cancelObservers(){
+        thumbPicture.valueChanged = nil
+        smallPicture.valueChanged = nil
+    }
+
 }

@@ -26,7 +26,6 @@ class CategoryFilterVm {
     }
     
     init(onCategoriesUpdate : (() -> ())? = nil, onCategorySelectionUpdate : ((Category?) -> ())? = nil) {
-        print("CategoryFilterVm.init()")
         onCategoriesUpdate.map { callBack in
             self.categoriesUpdated = callBack
         }

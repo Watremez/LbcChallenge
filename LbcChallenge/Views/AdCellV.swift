@@ -16,10 +16,11 @@ class AdCellV : UITableViewCell {
     var lblUrgent : UILabel!
     var lblCategory : UILabel!
     var lblDepositDate : UILabel!
+    var activityIndicator: UIActivityIndicatorView!
 
     // Members
     private var mPr_bInitialized : Bool = false
-    var viewModel : AdCellVm!
+    var vm : AdCellVm? = nil
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -35,6 +36,7 @@ class AdCellV : UITableViewCell {
             setupLblUrgent()
             setupLblCategory()
             setupLblDepositDate()
+            setupActivityIndicator()
             
             setupPlacement()
             mPr_bInitialized = true
@@ -47,6 +49,7 @@ class AdCellV : UITableViewCell {
         imgPicture.layer.cornerRadius = 10
         imgPicture.clipsToBounds = true
         imgPicture.backgroundColor = UIColor.white
+        imgPicture.isHidden = false
         contentView.addSubview(imgPicture)
         imgPicture.translatesAutoresizingMaskIntoConstraints = false
     }
@@ -96,6 +99,13 @@ class AdCellV : UITableViewCell {
         lblDepositDate.translatesAutoresizingMaskIntoConstraints = false
     }
 
+    func setupActivityIndicator() {
+        activityIndicator = UIActivityIndicatorView()
+        self.activityIndicator.isHidden = true
+        contentView.addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+    }
+
     func setupPlacement() {
         let viewsDict : [String : Any] = [
             "picture" : (imgPicture as Any),
@@ -103,7 +113,8 @@ class AdCellV : UITableViewCell {
             "price" : (lblPrice as Any),
             "urgent" : (lblUrgent as Any),
             "category" : (lblCategory as Any),
-            "date" : (lblDepositDate as Any)
+            "date" : (lblDepositDate as Any),
+            "activity" : (activityIndicator as Any)
             ]
         
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-5-[picture(110)]-5-[title]-5-|", options: [], metrics: nil, views: viewsDict))
@@ -111,41 +122,50 @@ class AdCellV : UITableViewCell {
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[picture]-[price]", options: [], metrics: nil, views: viewsDict))
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[picture]-[category]", options: [], metrics: nil, views: viewsDict))
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[picture]-[date]", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-5-[activity(picture)]", options: [], metrics: nil, views: viewsDict))
 
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-25-[picture(110)]-25-|", options: [], metrics: nil, views: viewsDict))
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-25-[title]-5-[price]-5-[category]-5-[date]", options: [], metrics: nil, views: viewsDict))
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-30-[urgent]", options: [], metrics: nil, views: viewsDict))
-        
+        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-25-[activity(picture)]", options: [], metrics: nil, views: viewsDict))
+
     }
     
-    
-    func initViewModel(_ viewModel : AdCellVm) {
-        self.viewModel = viewModel
-        imgPicture.image = viewModel.picture
-        lblTitle.text = viewModel.title
-        viewModel.category.map { lblCategory.text = $0.name }
-        lblCategory.isHidden = viewModel.category == nil
-        lblPrice.text = viewModel.price
-        lblDepositDate.text = viewModel.depositDate
-        lblUrgent.isHidden = !viewModel.urgent
-        if viewModel.urgent {
-            lblUrgent.text = " Urgent "
-            let bounds = CGRect(x: 0, y: 0, width: lblUrgent.bounds.width + 40, height: lblUrgent.bounds.height + 20)
-            lblUrgent.bounds = bounds
+    func setup(vm : AdCellVm) {
+        self.vm = vm
+        lblTitle.text = vm.title
+        lblCategory.text = vm.category
+        lblPrice.text = vm.price
+        lblDepositDate.text = vm.depositDate
+        if vm.urgent {
+            lblUrgent.text = " URGENT "
+            lblUrgent.isHidden = false
+        } else {
+            lblUrgent.isHidden = true
         }
+        
+        if vm.thumbPicture.loaded {
+            imgPicture.image = vm.thumbPicture.value
+            imgPicture.isHidden = false
+            activityIndicator.isHidden = true
+            activityIndicator.stopAnimating()
+        } else {
+            self.imgPicture.isHidden = true
+            self.activityIndicator.startAnimating()
+            self.activityIndicator.isHidden = false
+        }
+        vm.thumbPicture.valueChanged = { image in
+            self.imgPicture.image = image
+            self.imgPicture.isHidden = false
+            self.activityIndicator.isHidden = true
+            self.activityIndicator.stopAnimating()
+        }
+
     }
-
-
-}
-
-
-// MARK: - AsynchronousImageDisplayer
-
-extension AdCellV : AsynchronousImageDisplayer {
     
-    
-    func imageReady(imageDownloaded: UIImage) {
-        imgPicture.image = imageDownloaded
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.vm?.cancelObservers()
     }
     
 }

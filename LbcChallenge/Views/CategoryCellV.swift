@@ -11,23 +11,23 @@ import UIKit
 class CategoryCellV : UITableViewCell {
     // Outlets
     var lblName : UILabel!
-
+    
     // Members
     private var mPr_bInitialized : Bool = false
     private var categoryCellVm : CategoryCellVm!
     var index : Int = -1 {
         didSet {
-            callToViewModelForUIUpdate()
+            updateViewBasedOnViewModel()
         }
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
+        
         if !mPr_bInitialized {
             setupLblName()
             
@@ -36,7 +36,7 @@ class CategoryCellV : UITableViewCell {
         }
     }
     
-    func callToViewModelForUIUpdate() {
+    func             updateViewBasedOnViewModel() {
         categoryCellVm = CategoryCellVm(
             categoryAtIndex: self.index,
             onCategoryUpdate: {
@@ -45,7 +45,7 @@ class CategoryCellV : UITableViewCell {
                 }
             })
     }
-
+    
     func setupLblName(){
         lblName = UILabel()
         contentView.addSubview(lblName)
@@ -56,13 +56,13 @@ class CategoryCellV : UITableViewCell {
     func setupPlacement(){
         let viewsDict : [String : Any] = [
             "name" : (lblName as Any)
-            ]
+        ]
         
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[name]-|", options: [], metrics: nil, views: viewsDict))
-
+        
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[name]-|", options: [], metrics: nil, views: viewsDict))
-
+        
     }
-
+    
     
 }

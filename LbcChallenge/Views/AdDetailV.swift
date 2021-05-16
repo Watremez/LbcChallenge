@@ -19,10 +19,11 @@ class AdDetailV : UIView {
     var lblDepositDate : UILabel!
     var lblDescription : UILabel!
     var mnoDescriptionContent : UITextView!
+    var activityIndicator: UIActivityIndicatorView!
 
     // Members
     private var mPr_bInitialized : Bool = false
-    var viewModel : AdDetailVm = AdDetailVm.empty
+    var vm : AdDetailVm? = nil
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -34,11 +35,12 @@ class AdDetailV : UIView {
             setupImgPicture()
             setupLblTitle()
             setupLblPrice()
-//            setupLblUrgent()
-//            setupLblCategory()
+            setupLblUrgent()
+            setupLblCategory()
             setupLblDepositDate()
             setupLblDescription()
             setupMnoDescriptionContent()
+            setupActivityIndicator()
 
             setupPlacement()
             mPr_bInitialized = true
@@ -50,6 +52,7 @@ class AdDetailV : UIView {
         imgPicture = UIImageView(image: PictureCache.defaultImage)
         imgPicture.contentMode = .scaleAspectFit
         imgPicture.backgroundColor = UIColor.white
+        imgPicture.isHidden = false
         self.addSubview(imgPicture)
         imgPicture.translatesAutoresizingMaskIntoConstraints = false
     }
@@ -115,6 +118,12 @@ class AdDetailV : UIView {
         mnoDescriptionContent.translatesAutoresizingMaskIntoConstraints = false
     }
 
+    func setupActivityIndicator() {
+        activityIndicator = UIActivityIndicatorView()
+        self.activityIndicator.isHidden = true
+        self.addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+    }
 
 
     func setupPlacement() {
@@ -126,16 +135,22 @@ class AdDetailV : UIView {
             "category" : (lblCategory as Any),
             "date" : (lblDepositDate as Any),
             "description" : (lblDescription as Any),
-            "descriptionContent" : (mnoDescriptionContent as Any)
+            "descriptionContent" : (mnoDescriptionContent as Any),
+            "activity" : (activityIndicator as Any)
             ]
         
         self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[picture]|", options: [], metrics: nil, views: viewsDict))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-10-[urgent]", options: [], metrics: nil, views: viewsDict))
         self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[title]-|", options: [], metrics: nil, views: viewsDict))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[category]-|", options: [], metrics: nil, views: viewsDict))
         self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[description]", options: [], metrics: nil, views: viewsDict))
         self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[descriptionContent]-|", options: [], metrics: nil, views: viewsDict))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[activity(picture)]|", options: [], metrics: nil, views: viewsDict))
 
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[picture]-[title]-[price]-50-[description]-[descriptionContent]-|", options: [], metrics: nil, views: viewsDict))
-        
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[picture]-[title]-[price]-[category]-50-[description]-[descriptionContent]-|", options: [], metrics: nil, views: viewsDict))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-10-[urgent]", options: [], metrics: nil, views: viewsDict))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[activity(picture)]", options: [], metrics: nil, views: viewsDict))
+
         NSLayoutConstraint.activate([
             lblDepositDate.centerYAnchor.constraint(equalTo: lblPrice.centerYAnchor),
             lblPrice.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8),
@@ -144,23 +159,36 @@ class AdDetailV : UIView {
 
     }
     
-    
-    func initViewModel(_ viewModel : AdDetailVm) {
-        self.viewModel = viewModel
-        imgPicture.image = viewModel.picture
-        lblTitle.text = viewModel.title
-//        viewModel.category.map { lblCategory.text = $0.name }
-//        lblCategory.isHidden = viewModel.category == nil
-        lblPrice.text = viewModel.price
-        lblDepositDate.text = viewModel.depositDate
-        mnoDescriptionContent.text = viewModel.description
-//        lblUrgent.isHidden = !viewModel.urgent
-//        if viewModel.urgent {
-//            lblUrgent.text = " Urgent "
-//            let bounds = CGRect(x: 0, y: 0, width: lblUrgent.bounds.width + 40, height: lblUrgent.bounds.height + 20)
-//            lblUrgent.bounds = bounds
-//        }
+    func setup(vm: AdDetailVm) {
+        self.vm = vm
+        lblTitle.text = vm.title
+        lblCategory.text = vm.category
+        lblPrice.text = vm.price
+        lblDepositDate.text = vm.depositDate
+        mnoDescriptionContent.text = vm.description
+        if vm.urgent {
+            lblUrgent.text = " URGENT "
+            lblUrgent.isHidden = false
+        } else {
+            lblUrgent.isHidden = true
+        }
+        
+        if vm.smallPicture.loaded {
+            imgPicture.image = vm.smallPicture.value
+            imgPicture.isHidden = false
+            activityIndicator.isHidden = true
+            activityIndicator.stopAnimating()
+        } else {
+            self.imgPicture.isHidden = true
+            self.activityIndicator.startAnimating()
+            self.activityIndicator.isHidden = false
+        }
+        vm.smallPicture.valueChanged = { image in
+            self.imgPicture.image = image
+            self.imgPicture.isHidden = false
+            self.activityIndicator.isHidden = true
+            self.activityIndicator.stopAnimating()
+        }
     }
-
 
 }
