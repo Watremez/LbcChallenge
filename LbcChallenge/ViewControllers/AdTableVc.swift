@@ -13,9 +13,8 @@ class AdTableVc: UIViewController {
     var navigationBar : UINavigationBar = UINavigationBar()
     var safeArea: UILayoutGuide!
 
-    private var categoryFilterVm : CategoryFilterVm  = CategoryFilterVm()
-    private var appVm : AppVm!
-    private var adListVm : AdListVm? = nil
+    var adListVm : AdListVm? = nil
+    var categoryFilterVm : CategoryFilterVm? = nil
 
     override func loadView() {
         super.loadView()
@@ -25,26 +24,21 @@ class AdTableVc: UIViewController {
         setupNavigationBar()
         setupPlacement()
         
-        updateViewBasedOnViewModel()
     }
     
-    func updateViewBasedOnViewModel() {
-        appVm = AppVm()
-        appVm.appIsLoading.valueChanged = { appLoadingStatus in
-            if appLoadingStatus == false {
-                self.adListVm = self.appVm.adListViewModel
-                self.adListVm!.reloadTableViewClosure = {
-                    self.tableView.reloadData()
-                }
-                self.tableView.reloadData()
-            }
+    func setup(adListVm : AdListVm, categoryFilterVm : CategoryFilterVm) {
+        self.adListVm = adListVm
+        self.adListVm!.reloadTableViewClosure = {
+            self.tableView.reloadData()
         }
-        appVm.initFetch()
+        self.tableView.reloadData()
+        self.categoryFilterVm = categoryFilterVm
     }
 
     @objc func OnFliterClick(){
+        guard let catVm = self.categoryFilterVm else { return }
         let vc = CategoryFilterVc()
-        vc.categoryFilterVm = self.categoryFilterVm
+        vc.setup(vm: catVm)
         let nc = UINavigationController()
         nc.viewControllers = [vc]
         self.showDetailViewController(nc, sender: self)

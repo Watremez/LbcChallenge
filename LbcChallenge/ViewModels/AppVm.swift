@@ -13,7 +13,7 @@ class AppVm {
     let appIsLoading: Observable<Bool>
     let alertMessage : Observable<String?>
     var adListViewModel : AdListVm? = nil
-    var categoryListViewModel : CategoryListVm? = nil
+    var categoryFilterViewModel : CategoryFilterVm? = nil
 
     init(apiService: ApiServiceProtocol = ApiService(), domainUrlString: String? = nil) {
         self.apiService = apiService
@@ -45,7 +45,7 @@ class AppVm {
             case .success(let downloadedCategories):
                 Content.shared.categories = downloadedCategories
                 Notification.Name.CategoriesDownloaded.post()
-                self.categoryListViewModel = CategoryListVm(apiService: self.apiService, categoryList: Content.shared.categories)
+                self.categoryFilterViewModel = CategoryFilterVm(apiService: self.apiService, categoryList: Content.shared.categories)
                 self.fetchAds()
             default:
                 self.alertMessage.value = "error loading categories"

@@ -29,11 +29,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
 
         var mainViewController : SplitVc
-        mainViewController = SplitVc()
+        mainViewController = SplitVc() // in mainViewController is instanciated the main ViewModel : AppVm
 
         let master = UINavigationController()
         let detail = UINavigationController()
-        master.viewControllers = [AdTableVc()] // in AdTableVc is instanciated the main ViewModel : AppVm
+        master.viewControllers = [AdTableVc()]
         detail.viewControllers = [AdDetailVc()]
         mainViewController.viewControllers = [master, detail]
         mainViewController.preferredDisplayMode = .oneBesideSecondary

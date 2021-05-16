@@ -12,7 +12,7 @@
 		91212D7726501846005847AB /* AdListVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91212D7626501846005847AB /* AdListVm.swift */; };
 		91212D7926501D10005847AB /* AdCellVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91212D7826501D10005847AB /* AdCellVm.swift */; };
 		91212D7B2650F984005847AB /* AdDetailVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91212D7A2650F984005847AB /* AdDetailVm.swift */; };
-		91212D7D265155AC005847AB /* CategoryListVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91212D7C265155AC005847AB /* CategoryListVm.swift */; };
+		91212D7D265155AC005847AB /* CategoryFilterVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91212D7C265155AC005847AB /* CategoryFilterVm.swift */; };
 		91E59EC52649969D0073319B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E59EC42649969D0073319B /* AppDelegate.swift */; };
 		91E59EC72649969D0073319B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E59EC62649969D0073319B /* SceneDelegate.swift */; };
 		91E59EC92649969D0073319B /* AdTableVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E59EC82649969D0073319B /* AdTableVc.swift */; };
@@ -29,12 +29,7 @@
 		91F75C0F264D1E0C00D3CB33 /* SplitVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75C0E264D1E0C00D3CB33 /* SplitVc.swift */; };
 		91F75C11264D1E8600D3CB33 /* AdDetailVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75C10264D1E8600D3CB33 /* AdDetailVc.swift */; };
 		91F75C15264D26E500D3CB33 /* AdDetailV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75C14264D26E500D3CB33 /* AdDetailV.swift */; };
-		91F75C17264D7F5300D3CB33 /* CategoryTableVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75C16264D7F5200D3CB33 /* CategoryTableVc.swift */; };
-		91F75C19264E541E00D3CB33 /* CategoryCellVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75C18264E541D00D3CB33 /* CategoryCellVm.swift */; };
-		91F75C1B264E558100D3CB33 /* CategoryCellV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75C1A264E558100D3CB33 /* CategoryCellV.swift */; };
-		91F75C1D264E6C8E00D3CB33 /* CategoriesVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75C1C264E6C8E00D3CB33 /* CategoriesVm.swift */; };
 		91F75C21264EB1B000D3CB33 /* CategoryFilterVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75C20264EB1B000D3CB33 /* CategoryFilterVc.swift */; };
-		91F75C23264EB21000D3CB33 /* CategoryFilterVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75C22264EB21000D3CB33 /* CategoryFilterVm.swift */; };
 		91F75C25264EB50C00D3CB33 /* CategoryFilterV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75C24264EB50C00D3CB33 /* CategoryFilterV.swift */; };
 /* End PBXBuildFile section */
 
@@ -44,7 +39,7 @@
 		91212D7626501846005847AB /* AdListVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdListVm.swift; sourceTree = "<group>"; };
 		91212D7826501D10005847AB /* AdCellVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdCellVm.swift; sourceTree = "<group>"; };
 		91212D7A2650F984005847AB /* AdDetailVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdDetailVm.swift; sourceTree = "<group>"; };
-		91212D7C265155AC005847AB /* CategoryListVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListVm.swift; sourceTree = "<group>"; };
+		91212D7C265155AC005847AB /* CategoryFilterVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFilterVm.swift; sourceTree = "<group>"; };
 		91E59EC12649969D0073319B /* LbcChallenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LbcChallenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91E59EC42649969D0073319B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		91E59EC62649969D0073319B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,12 +58,7 @@
 		91F75C0E264D1E0C00D3CB33 /* SplitVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitVc.swift; sourceTree = "<group>"; };
 		91F75C10264D1E8600D3CB33 /* AdDetailVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdDetailVc.swift; sourceTree = "<group>"; };
 		91F75C14264D26E500D3CB33 /* AdDetailV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdDetailV.swift; sourceTree = "<group>"; };
-		91F75C16264D7F5200D3CB33 /* CategoryTableVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableVc.swift; sourceTree = "<group>"; };
-		91F75C18264E541D00D3CB33 /* CategoryCellVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCellVm.swift; sourceTree = "<group>"; };
-		91F75C1A264E558100D3CB33 /* CategoryCellV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCellV.swift; sourceTree = "<group>"; };
-		91F75C1C264E6C8E00D3CB33 /* CategoriesVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesVm.swift; sourceTree = "<group>"; };
 		91F75C20264EB1B000D3CB33 /* CategoryFilterVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFilterVc.swift; sourceTree = "<group>"; };
-		91F75C22264EB21000D3CB33 /* CategoryFilterVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFilterVm.swift; sourceTree = "<group>"; };
 		91F75C24264EB50C00D3CB33 /* CategoryFilterV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFilterV.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -133,7 +123,6 @@
 				91F75C0E264D1E0C00D3CB33 /* SplitVc.swift */,
 				91E59EC82649969D0073319B /* AdTableVc.swift */,
 				91F75C10264D1E8600D3CB33 /* AdDetailVc.swift */,
-				91F75C16264D7F5200D3CB33 /* CategoryTableVc.swift */,
 				91F75C20264EB1B000D3CB33 /* CategoryFilterVc.swift */,
 			);
 			path = ViewControllers;
@@ -146,10 +135,7 @@
 				91212D7626501846005847AB /* AdListVm.swift */,
 				91212D7826501D10005847AB /* AdCellVm.swift */,
 				91212D7A2650F984005847AB /* AdDetailVm.swift */,
-				91212D7C265155AC005847AB /* CategoryListVm.swift */,
-				91F75C1C264E6C8E00D3CB33 /* CategoriesVm.swift */,
-				91F75C18264E541D00D3CB33 /* CategoryCellVm.swift */,
-				91F75C22264EB21000D3CB33 /* CategoryFilterVm.swift */,
+				91212D7C265155AC005847AB /* CategoryFilterVm.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -159,7 +145,6 @@
 			children = (
 				91E59ED8264A60C60073319B /* AdCellV.swift */,
 				91F75C14264D26E500D3CB33 /* AdDetailV.swift */,
-				91F75C1A264E558100D3CB33 /* CategoryCellV.swift */,
 				91F75C24264EB50C00D3CB33 /* CategoryFilterV.swift */,
 			);
 			path = Views;
@@ -247,22 +232,17 @@
 			files = (
 				91212D73264FF782005847AB /* Observable.swift in Sources */,
 				91212D7726501846005847AB /* AdListVm.swift in Sources */,
-				91F75C1D264E6C8E00D3CB33 /* CategoriesVm.swift in Sources */,
-				91212D7D265155AC005847AB /* CategoryListVm.swift in Sources */,
+				91212D7D265155AC005847AB /* CategoryFilterVm.swift in Sources */,
 				91E59EF0264A91E40073319B /* ApiService.swift in Sources */,
 				91F75C25264EB50C00D3CB33 /* CategoryFilterV.swift in Sources */,
 				91F75C15264D26E500D3CB33 /* AdDetailV.swift in Sources */,
 				91E59EE1264A7BB90073319B /* ImageUrls.swift in Sources */,
 				91E59ED9264A60C70073319B /* AdCellV.swift in Sources */,
 				91F75C0F264D1E0C00D3CB33 /* SplitVc.swift in Sources */,
-				91F75C17264D7F5300D3CB33 /* CategoryTableVc.swift in Sources */,
-				91F75C1B264E558100D3CB33 /* CategoryCellV.swift in Sources */,
 				91E59EC92649969D0073319B /* AdTableVc.swift in Sources */,
 				91E59EE3264A7C7E0073319B /* Ad.swift in Sources */,
-				91F75C19264E541E00D3CB33 /* CategoryCellVm.swift in Sources */,
 				91F75C11264D1E8600D3CB33 /* AdDetailVc.swift in Sources */,
 				91F75BDC264BD89B00D3CB33 /* Content.swift in Sources */,
-				91F75C23264EB21000D3CB33 /* CategoryFilterVm.swift in Sources */,
 				91F75BE0264BFB5900D3CB33 /* Notification.swift in Sources */,
 				91E59EC52649969D0073319B /* AppDelegate.swift in Sources */,
 				91212D7B2650F984005847AB /* AdDetailVm.swift in Sources */,

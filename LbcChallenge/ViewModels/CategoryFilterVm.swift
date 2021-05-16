@@ -1,51 +1,35 @@
 //
-//  CategoryFilterVm.swift
+//  CategoryListVm.swift
 //  LbcChallenge
 //
-//  Created by Jean-baptiste Watremez on 14/05/2021.
+//  Created by Jean-baptiste Watremez on 16/05/2021.
 //
 
 import Foundation
 
-
 class CategoryFilterVm {
-    
-    var categoriesUpdated : (() -> ()) = { }
-    var categorySelectionUpdated : ((Category?) -> ()) = {maybeNewSelectedCategory in }
-    
-    private(set) var categories : [Category]! {
-        didSet {
-            self.categoriesUpdated()
-        }
-    }
-    var categorySelected : Category? = nil {
-        didSet {
-            Notification.Name.SelectedCategory.post(object: self.categorySelected)
-            self.categorySelectionUpdated(self.categorySelected)
-        }
-    }
-    
-    init(onCategoriesUpdate : (() -> ())? = nil, onCategorySelectionUpdate : ((Category?) -> ())? = nil) {
-        onCategoriesUpdate.map { callBack in
-            self.categoriesUpdated = callBack
-        }
-        onCategorySelectionUpdate.map { callBack in
-            self.categorySelectionUpdated = callBack
-        }
 
-        self.loadData()
-        Notification.Name.CategoriesDownloaded.onNotified { [weak self] note in
-            guard let `self` = self else { return }
-            self.loadData()
+    private let apiService: ApiServiceProtocol
+    private(set) var categories : Observable<[Category]>
+    private(set) var selectedCategory : Observable<Category?>
+
+    init(apiService: ApiServiceProtocol = ApiService(), categoryList : [Category]) {
+        self.apiService = apiService
+        self.categories = Observable<[Category]>(initialValue: [])
+        self.selectedCategory = Observable<Category?>(initialValue: nil)
+        self.processFetchedCategories(downloadedCategories: categoryList)
+    }
+    
+    func processFetchedCategories(downloadedCategories: [Category]) {
+        self.categories.value = downloadedCategories
+    }
+    
+    func selectCategory(at row: Int){
+        if row == 0 {
+            self.selectedCategory.value = nil
+        } else {
+            self.selectedCategory.value = self.categories.value[row-1]
         }
-        
+        Notification.Name.SelectedCategory.post(object: self.selectedCategory.value)
     }
-    
-    private func loadData() {
-        self.categories = Content.shared.categories
-        self.categorySelected = nil
-    }
-    
-    
 }
-

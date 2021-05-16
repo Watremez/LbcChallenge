@@ -9,16 +9,19 @@ import Foundation
 import UIKit
 
 class CategoryFilterVc: UIViewController {
-
+    
     var categoryFilterV : CategoryFilterV!
     var safeArea: UILayoutGuide!
-    var categoryFilterVm : CategoryFilterVm!
+    
+    weak var vm : CategoryFilterVm? = nil
 
     override func viewWillAppear(_ animated: Bool) {
-        
+        print("View will appear")
         self.title = "Filtrer les catégories d'annonces"
         self.view.backgroundColor = UIColor.white
-        
+
+        setupView()
+
         if let svc = self.splitViewController {
             // Permet d'avoir le bouton back sur la vue détail.
             let ni = self.navigationItem
@@ -30,16 +33,18 @@ class CategoryFilterVc: UIViewController {
     }
   
     override func loadView() {
+        print("Load view")
         super.loadView()
 
         view.backgroundColor = .white
         safeArea = view.layoutMarginsGuide
-        setupView()
     }
     
     func setupView(){
+        guard let viewModel = self.vm else { return }
+        print("Setup View")
         self.categoryFilterV = CategoryFilterV()
-        self.categoryFilterV.categoryFilterVm = self.categoryFilterVm
+        self.categoryFilterV.setup(vm: viewModel)
         view.addSubview(categoryFilterV)
         categoryFilterV.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -48,6 +53,11 @@ class CategoryFilterVc: UIViewController {
             categoryFilterV.topAnchor.constraint(equalTo: safeArea.topAnchor),
             categoryFilterV.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
         ])
+    }
+    
+    func setup(vm: CategoryFilterVm){
+        print("Setup ViewModel")
+        self.vm = vm
     }
 
 
