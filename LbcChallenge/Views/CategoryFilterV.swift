@@ -52,12 +52,13 @@ class CategoryFilterV : UIView {
         ]
         
         self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[selectedCategory]|", options: [], metrics: nil, views: viewsDict))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[categoryPicker]|", options: [], metrics: nil, views: viewsDict))
+
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[selectedCategory]-[categoryPicker]", options: [], metrics: nil, views: viewsDict))
         
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[selectedCategory]", options: [], metrics: nil, views: viewsDict))
-        
-        picker.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        picker.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        picker.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor).isActive = true
+//        picker.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor).isActive = true
+//        picker.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor).isActive = true
+//        picker.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
     
     func setup(vm : CategoryFilterVm) {
