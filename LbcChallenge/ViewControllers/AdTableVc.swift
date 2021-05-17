@@ -13,8 +13,8 @@ class AdTableVc: UIViewController {
     var navigationBar : UINavigationBar = UINavigationBar()
     var safeArea: UILayoutGuide!
 
-    var adListVm : AdListVmProtocol? = nil
-    var categoryFilterVm : CategoryFilterVmProtocol? = nil
+    private var adListVm : AdListVmProtocol? = nil
+    private var categoryFilterVm : CategoryFilterVmProtocol? = nil
 
     override func loadView() {
         super.loadView()

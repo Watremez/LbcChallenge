@@ -20,7 +20,7 @@ class AdCellV : UITableViewCell {
 
     // Members
     private var mPr_bInitialized : Bool = false
-    var vm : AdCellVmProtocol? = nil
+    private var vm : AdCellVmProtocol? = nil
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

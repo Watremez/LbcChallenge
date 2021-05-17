@@ -15,7 +15,7 @@ class CategoryFilterV : UIView {
     private var picker : UIPickerView!
     
     // Members
-    weak var vm : CategoryFilterVmProtocol? = nil
+    private weak var vm : CategoryFilterVmProtocol? = nil
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

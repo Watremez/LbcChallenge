@@ -23,7 +23,7 @@ class AdDetailV : UIView {
 
     // Members
     private var mPr_bInitialized : Bool = false
-    var vm : AdDetailVmProtocol? = nil
+    private var vm : AdDetailVmProtocol? = nil
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

@@ -13,7 +13,7 @@ class AdDetailVc : UIViewController {
     var detailView : AdDetailV!
 
     // Members
-    var vm : AdDetailVmProtocol? = nil
+    private(set) var vm : AdDetailVmProtocol? = nil
     
     override func viewWillAppear(_ animated: Bool) {
         self.edgesForExtendedLayout = []
