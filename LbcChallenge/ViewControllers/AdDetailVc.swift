@@ -17,7 +17,6 @@ class AdDetailVc : UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.edgesForExtendedLayout = []
-
         
         if self.vm == nil {
             self.title = ""

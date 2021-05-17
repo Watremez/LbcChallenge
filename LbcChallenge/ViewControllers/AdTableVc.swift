@@ -23,7 +23,6 @@ class AdTableVc: UIViewController {
         setupTableView()
         setupNavigationBar()
         setupPlacement()
-        
     }
     
     func setup(adListVm : AdListVm, categoryFilterVm : CategoryFilterVm) {

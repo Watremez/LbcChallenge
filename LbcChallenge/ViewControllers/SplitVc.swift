@@ -13,6 +13,7 @@ class SplitVc : UISplitViewController {
 
     override func loadView() {
         super.loadView()
+        self.delegate = self
         updateViewBasedOnViewModel()
     }
 
@@ -29,5 +30,25 @@ class SplitVc : UISplitViewController {
         appVm.initFetch()
     }
 
+    
+}
+
+
+// MARK:  - UISplitViewControllerDelegate
+
+
+extension SplitVc : UISplitViewControllerDelegate {
+
+    func splitViewController(_ splitViewController: UISplitViewController,
+                    collapseSecondary secondaryViewController: UIViewController,
+                    onto primaryViewController: UIViewController) -> Bool {
+        if let secVcAsNc = secondaryViewController as? UINavigationController
+           , let topVc = secVcAsNc.topViewController as? AdDetailVc
+           , topVc.vm == nil {
+            return true
+        } else {
+            return false
+        }
+    }
     
 }

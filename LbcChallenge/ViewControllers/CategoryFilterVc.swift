@@ -16,7 +16,6 @@ class CategoryFilterVc: UIViewController {
     weak var vm : CategoryFilterVm? = nil
 
     override func viewWillAppear(_ animated: Bool) {
-        print("View will appear")
         self.title = "Filtrer les catégories d'annonces"
         self.view.backgroundColor = UIColor.white
 
@@ -33,7 +32,6 @@ class CategoryFilterVc: UIViewController {
     }
   
     override func loadView() {
-        print("Load view")
         super.loadView()
 
         view.backgroundColor = .white
@@ -42,7 +40,6 @@ class CategoryFilterVc: UIViewController {
     
     func setupView(){
         guard let viewModel = self.vm else { return }
-        print("Setup View")
         self.categoryFilterV = CategoryFilterV()
         self.categoryFilterV.setup(vm: viewModel)
         view.addSubview(categoryFilterV)
@@ -56,7 +53,6 @@ class CategoryFilterVc: UIViewController {
     }
     
     func setup(vm: CategoryFilterVm){
-        print("Setup ViewModel")
         self.vm = vm
     }
 

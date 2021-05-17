@@ -44,7 +44,6 @@ class AppVm {
             switch result {
             case .success(let downloadedCategories):
                 Content.shared.categories = downloadedCategories
-                Notification.Name.CategoriesDownloaded.post()
                 self.categoryFilterViewModel = CategoryFilterVm(apiService: self.apiService, categoryList: Content.shared.categories)
                 self.fetchAds()
             default:
@@ -59,7 +58,6 @@ class AppVm {
             switch result {
             case .success(let downloadedAds):
                 Content.shared.ads = downloadedAds
-                Notification.Name.AdsDownloaded.post()
                 self.adListViewModel = AdListVm(apiService: self.apiService, adList: Content.shared.ads)
                 self.appIsLoading.value = false
             default:
