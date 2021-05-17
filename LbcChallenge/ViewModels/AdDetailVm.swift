@@ -8,7 +8,20 @@
 import Foundation
 import UIKit
 
-class AdDetailVm{
+protocol AdDetailVmProtocol {
+    var thumbPicture : Observable<UIImage> { get }
+    var smallPicture : Observable<UIImage> { get }
+    var category : String { get }
+    var title : String { get }
+    var price : String { get }
+    var urgent : Bool { get }
+    var depositDate : String { get }
+    var description : String { get }
+    
+    func cancelObservers()
+}
+
+class AdDetailVm : AdDetailVmProtocol {
 
     let apiService: ApiServiceProtocol
 

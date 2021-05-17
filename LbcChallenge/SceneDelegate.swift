@@ -30,7 +30,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.overrideUserInterfaceStyle = .light
 
         var mainViewController : SplitVc
-        mainViewController = SplitVc() // in mainViewController is instanciated the main ViewModel : AppVm
+        mainViewController = SplitVc()
+        mainViewController.setup(withAppViewModel: AppVm(apiService: ApiService(), domainUrlString: "https://raw.githubusercontent.com/leboncoin/paperclip/master/"))
 
         let master = UINavigationController()
         let detail = UINavigationController()

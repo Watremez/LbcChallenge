@@ -7,13 +7,22 @@
 
 import Foundation
 
-class AppVm {
+protocol AppVmProtocol {
+    var appIsLoading: Observable<Bool> { get }
+    var alertMessage : Observable<String?> { get }
+    var adListViewModel : AdListVmProtocol? { get }
+    var categoryFilterViewModel : CategoryFilterVmProtocol? { get }
+    
+    func initFetch()
+}
+
+class AppVm : AppVmProtocol {
     private var baseUrl : String = "https://raw.githubusercontent.com/leboncoin/paperclip/master/"
     private let apiService: ApiServiceProtocol
     let appIsLoading: Observable<Bool>
     let alertMessage : Observable<String?>
-    var adListViewModel : AdListVm? = nil
-    var categoryFilterViewModel : CategoryFilterVm? = nil
+    var adListViewModel : AdListVmProtocol? = nil
+    var categoryFilterViewModel : CategoryFilterVmProtocol? = nil
 
     init(apiService: ApiServiceProtocol = ApiService(), domainUrlString: String? = nil) {
         self.apiService = apiService
@@ -32,7 +41,7 @@ class AppVm {
                     return
                 }
             }
-            self.adListViewModel?.processFetchedAds(downloadedAds: Content.shared.ads)
+            self.adListViewModel?.processFetchedAds(downloadedAds: Content.shared.ads, filterOnCategory: nil)
         }
 
     }

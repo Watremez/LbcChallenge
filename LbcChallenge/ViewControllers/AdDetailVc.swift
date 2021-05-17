@@ -13,7 +13,7 @@ class AdDetailVc : UIViewController {
     var detailView : AdDetailV!
 
     // Members
-    var vm : AdDetailVm? = nil
+    var vm : AdDetailVmProtocol? = nil
     
     override func viewWillAppear(_ animated: Bool) {
         self.edgesForExtendedLayout = []
@@ -43,12 +43,12 @@ class AdDetailVc : UIViewController {
     }
     
     
-    func setup(vm: AdDetailVm) {
+    func setup(withAdDetailViewModel vm: AdDetailVmProtocol) {
         self.vm = vm
         self.title = self.vm!.title
         self.view.backgroundColor = UIColor.white
         self.detailView = AdDetailV()
-        self.detailView.setup(vm: self.vm!)
+        self.detailView.setup(withDetailViewModel: self.vm!)
     }
 
     

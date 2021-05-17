@@ -15,7 +15,7 @@ class CategoryFilterV : UIView {
     private var picker : UIPickerView!
     
     // Members
-    weak var vm : CategoryFilterVm? = nil
+    weak var vm : CategoryFilterVmProtocol? = nil
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -32,6 +32,7 @@ class CategoryFilterV : UIView {
         lblSelectedCategory = UILabel()
         lblSelectedCategory.numberOfLines = 0
         lblSelectedCategory.lineBreakMode = .byWordWrapping
+        lblSelectedCategory.text = "Afficher les annonces du type : "
         self.addSubview(lblSelectedCategory)
         lblSelectedCategory.translatesAutoresizingMaskIntoConstraints = false
     }
@@ -61,7 +62,7 @@ class CategoryFilterV : UIView {
 //        picker.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
     
-    func setup(vm : CategoryFilterVm) {
+    func setup(withCategoryFilterViewModel vm : CategoryFilterVmProtocol) {
         self.vm = vm
         guard let viewModel = self.vm else { return }
         self.vm!.categories.valueChanged = { _ in
@@ -85,14 +86,11 @@ class CategoryFilterV : UIView {
             if let index = viewModel.categories.value.firstIndex(where: { oneCategory in
                 oneCategory.id == cat.id
             }) {
-                let selectedCategory = viewModel.categories.value[index]
-                self.lblSelectedCategory.text = String("N'afficher que les annonces de la catégorie : \(selectedCategory.name)")
                 picker.selectRow(index + 1, inComponent: 0, animated: false)
                 bPickedPresetDone = true
             }
         }
         if !bPickedPresetDone {
-            self.lblSelectedCategory.text = "Afficher toutes les annonces"
             picker.selectRow(0, inComponent: 0, animated: false)
         }
     }

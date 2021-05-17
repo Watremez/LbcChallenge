@@ -7,7 +7,16 @@
 
 import Foundation
 
-class AdListVm {
+protocol AdListVmProtocol {
+    var reloadTableViewClosure: (()->())? { get set }
+    var numberOfCells : Int { get }
+    
+    func processFetchedAds(downloadedAds: [Ad], filterOnCategory : Category?)
+    func getCellViewModel(at indexPath: IndexPath) -> AdCellVmProtocol
+    func getDetailViewModel(at indexPath: IndexPath) -> AdDetailVmProtocol
+}
+
+class AdListVm : AdListVmProtocol {
 
     private let apiService: ApiServiceProtocol
     private var ads = [Ad]()
@@ -103,11 +112,11 @@ class AdListVm {
         )
     }
 
-    func getCellViewModel(at indexPath: IndexPath) -> AdCellVm {
+    func getCellViewModel(at indexPath: IndexPath) -> AdCellVmProtocol {
         return adCellViewModels[indexPath.row]
     }
     
-    func getDetailViewModel(at indexPath: IndexPath) -> AdDetailVm {
+    func getDetailViewModel(at indexPath: IndexPath) -> AdDetailVmProtocol {
         self.adDetailViewModel = createAdDetailViewModel(accordingTo: self.ads[indexPath.row])
         return self.adDetailViewModel!
     }

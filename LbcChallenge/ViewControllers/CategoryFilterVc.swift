@@ -13,7 +13,7 @@ class CategoryFilterVc: UIViewController {
     var categoryFilterV : CategoryFilterV!
     var safeArea: UILayoutGuide!
     
-    weak var vm : CategoryFilterVm? = nil
+    weak var vm : CategoryFilterVmProtocol? = nil
 
     override func viewWillAppear(_ animated: Bool) {
         self.title = "Filtrer les catégories d'annonces"
@@ -41,7 +41,7 @@ class CategoryFilterVc: UIViewController {
     func setupView(){
         guard let viewModel = self.vm else { return }
         self.categoryFilterV = CategoryFilterV()
-        self.categoryFilterV.setup(vm: viewModel)
+        self.categoryFilterV.setup(withCategoryFilterViewModel: viewModel)
         view.addSubview(categoryFilterV)
         categoryFilterV.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -52,7 +52,7 @@ class CategoryFilterVc: UIViewController {
         ])
     }
     
-    func setup(vm: CategoryFilterVm){
+    func setup(withCategoryFilterViewModel vm: CategoryFilterVmProtocol){
         self.vm = vm
     }
 

@@ -7,7 +7,14 @@
 
 import Foundation
 
-class CategoryFilterVm {
+protocol CategoryFilterVmProtocol : AnyObject {
+    var categories : Observable<[Category]> { get }
+    var selectedCategory : Observable<Category?> { get }
+
+    func selectCategory(at row: Int)
+}
+
+class CategoryFilterVm : CategoryFilterVmProtocol {
 
     private let apiService: ApiServiceProtocol
     private(set) var categories : Observable<[Category]>
@@ -20,7 +27,7 @@ class CategoryFilterVm {
         self.processFetchedCategories(downloadedCategories: categoryList)
     }
     
-    func processFetchedCategories(downloadedCategories: [Category]) {
+    private func processFetchedCategories(downloadedCategories: [Category]) {
         self.categories.value = downloadedCategories
     }
     

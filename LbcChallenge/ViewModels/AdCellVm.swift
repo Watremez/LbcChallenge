@@ -8,7 +8,19 @@
 import Foundation
 import UIKit
 
-class AdCellVm {
+
+protocol AdCellVmProtocol {
+    var thumbPicture : Observable<UIImage> { get }
+    var category : String { get }
+    var title : String { get }
+    var price : String { get }
+    var urgent : Bool { get }
+    var depositDate : String { get }
+    
+    func cancelObservers()
+}
+
+class AdCellVm : AdCellVmProtocol {
 
     let apiService: ApiServiceProtocol
 

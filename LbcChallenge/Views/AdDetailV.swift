@@ -23,7 +23,7 @@ class AdDetailV : UIView {
 
     // Members
     private var mPr_bInitialized : Bool = false
-    var vm : AdDetailVm? = nil
+    var vm : AdDetailVmProtocol? = nil
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -159,7 +159,7 @@ class AdDetailV : UIView {
 
     }
     
-    func setup(vm: AdDetailVm) {
+    func setup(withDetailViewModel vm: AdDetailVmProtocol) {
         self.vm = vm
         lblTitle.text = vm.title
         lblCategory.text = vm.category

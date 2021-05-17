@@ -13,8 +13,8 @@ class AdTableVc: UIViewController {
     var navigationBar : UINavigationBar = UINavigationBar()
     var safeArea: UILayoutGuide!
 
-    var adListVm : AdListVm? = nil
-    var categoryFilterVm : CategoryFilterVm? = nil
+    var adListVm : AdListVmProtocol? = nil
+    var categoryFilterVm : CategoryFilterVmProtocol? = nil
 
     override func loadView() {
         super.loadView()
@@ -25,7 +25,7 @@ class AdTableVc: UIViewController {
         setupPlacement()
     }
     
-    func setup(adListVm : AdListVm, categoryFilterVm : CategoryFilterVm) {
+    func setup(withAdListViewModel adListVm : AdListVmProtocol, andCategoryFilterViewModel categoryFilterVm : CategoryFilterVmProtocol) {
         self.adListVm = adListVm
         self.adListVm!.reloadTableViewClosure = {
             self.tableView.reloadData()
@@ -37,7 +37,7 @@ class AdTableVc: UIViewController {
     @objc func OnFliterClick(){
         guard let catVm = self.categoryFilterVm else { return }
         let vc = CategoryFilterVc()
-        vc.setup(vm: catVm)
+        vc.setup(withCategoryFilterViewModel: catVm)
         let nc = UINavigationController()
         nc.viewControllers = [vc]
         self.showDetailViewController(nc, sender: self)
@@ -90,7 +90,7 @@ extension AdTableVc : UITableViewDataSource {
         }
         let vm = adListViewModel.getCellViewModel(at: indexPath)
         let adCellV = tableView.dequeueReusableCell(withIdentifier: "adCell", for: indexPath) as! AdCellV
-        adCellV.setup(vm: vm)
+        adCellV.setup(withCellViewModel: vm)
         return adCellV
     }
     
@@ -108,7 +108,7 @@ extension AdTableVc : UITableViewDelegate {
         }
         let vc = AdDetailVc()
         let vm = adListViewModel.getDetailViewModel(at: indexPath)
-        vc.setup(vm: vm)
+        vc.setup(withAdDetailViewModel: vm)
         
         let nc = UINavigationController()
         nc.viewControllers = [vc]
