@@ -55,8 +55,14 @@ class AppVm : AppVmProtocol {
                 Content.shared.categories = downloadedCategories
                 self.categoryFilterViewModel = CategoryFilterVm(apiService: self.apiService, categoryList: Content.shared.categories)
                 self.fetchAds()
+            case .wrongDownload :
+                self.alertMessage.value = "Erreur pendant le téléchargement des catégories d'annonce. \nVérifiez votre connexion à Internet."
+            case .wrongJsonDecoding(let message):
+                self.alertMessage.value = "Erreur de décodage des catégories reçues : \n\(message)"
+            case .wrongUrlFormat(let message):
+                self.alertMessage.value = "L'adresse internet où récupérer les catégories d'annonce est incorrecte. : \n\(message)"
             default:
-                self.alertMessage.value = "error loading categories"
+                self.alertMessage.value = "Erreur de chargement des catégories."
             }
         }
     }
@@ -69,8 +75,14 @@ class AppVm : AppVmProtocol {
                 Content.shared.ads = downloadedAds
                 self.adListViewModel = AdListVm(apiService: self.apiService, adList: Content.shared.ads)
                 self.appIsLoading.value = false
+            case .wrongDownload :
+                self.alertMessage.value = "Erreur pendant le téléchargement des annonces. \nVérifiez votre connexion à Internet."
+            case .wrongJsonDecoding(let message):
+                self.alertMessage.value = "Erreur de décodage des annonces reçues : \n\(message)"
+            case .wrongUrlFormat(let message):
+                self.alertMessage.value = "L'adresse internet où récupérer les annonces est incorrecte. : \n\(message)"
             default:
-                self.alertMessage.value = "error loading listing"
+                self.alertMessage.value = "Erreur de chargement des annonces."
             }
         }
     }

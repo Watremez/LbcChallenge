@@ -25,6 +25,12 @@ class SplitVc : UISplitViewController {
                 adTableVc.setup(withAdListViewModel: self.appVm.adListViewModel!, andCategoryFilterViewModel: self.appVm.categoryFilterViewModel!)
             }
         }
+        appVm.alertMessage.valueChanged = { message in
+            message.map { messageConfirmed in
+                let alert = UIAlertController(title: "", message: messageConfirmed, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true)            }
+        }
         appVm.initFetch()
     }
 
