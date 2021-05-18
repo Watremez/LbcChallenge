@@ -102,6 +102,7 @@ class AdCellV : UITableViewCell {
     func setupActivityIndicator() {
         activityIndicator = UIActivityIndicatorView()
         self.activityIndicator.isHidden = true
+        activityIndicator.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
         contentView.addSubview(activityIndicator)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
     }

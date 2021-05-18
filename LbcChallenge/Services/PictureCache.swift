@@ -35,12 +35,14 @@ class PictureCache {
         
     }
     
-    func get(withApi apiService: ApiServiceProtocol? = nil, atUrlString pictureUrl : String?, updateImage: @escaping (UIImage) -> ()) -> UIImage {
+    func get(withApi apiService: ApiServiceProtocol? = nil, atUrlString pictureUrl : String?, updateImage: @escaping (UIImage) -> ()) {
 
         guard let urlString = pictureUrl else {
             // If no pictureUrl has been provided,
             // then return default image and save nothing.
-            return Self.noImage
+            updateImage(Self.noImage)
+            return 
+//            return Self.noImage
         }
         
         // We have now a valid picture URL.
@@ -78,7 +80,7 @@ class PictureCache {
             }
         }
         
-        return Self.defaultImage
+//        return Self.defaultImage
     }
     
 }

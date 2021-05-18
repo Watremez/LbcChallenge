@@ -49,10 +49,10 @@ class AdDetailVm : AdDetailVmProtocol {
         self.thumbPicture = Observable<UIImage>(initialValue: PictureCache.defaultImage)
         self.smallPictureUrl = smallPictureUrl
         self.smallPicture = Observable<UIImage>(initialValue: PictureCache.defaultImage)
-        self.thumbPicture.value = PictureCache.library.get(withApi: self.apiService, atUrlString: self.thumbPictureUrl, updateImage: { image in
+        PictureCache.library.get(withApi: self.apiService, atUrlString: self.thumbPictureUrl, updateImage: { image in
             self.thumbPicture.value = image
         })
-        self.smallPicture.value = PictureCache.library.get(withApi: self.apiService, atUrlString: self.smallPictureUrl, updateImage: { image in
+        PictureCache.library.get(withApi: self.apiService, atUrlString: self.smallPictureUrl, updateImage: { image in
             self.smallPicture.value = image
         })
     }

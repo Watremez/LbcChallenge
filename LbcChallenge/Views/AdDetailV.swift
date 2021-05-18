@@ -120,6 +120,7 @@ class AdDetailV : UIView {
 
     func setupActivityIndicator() {
         activityIndicator = UIActivityIndicatorView()
+        activityIndicator.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
         self.activityIndicator.isHidden = true
         self.addSubview(activityIndicator)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false

@@ -42,7 +42,7 @@ class AdCellVm : AdCellVmProtocol {
         self.depositDate = depositeDate
         self.thumbPictureUrl = pictureUrl
         self.thumbPicture = Observable<UIImage>(initialValue: PictureCache.defaultImage)
-        self.thumbPicture.value = PictureCache.library.get(withApi: self.apiService, atUrlString: self.thumbPictureUrl, updateImage: { image in
+        PictureCache.library.get(withApi: self.apiService, atUrlString: self.thumbPictureUrl, updateImage: { image in
             self.thumbPicture.value = image
         })
     }
