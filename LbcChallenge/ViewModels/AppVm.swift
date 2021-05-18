@@ -53,7 +53,7 @@ class AppVm : AppVmProtocol {
             switch result {
             case .success(let downloadedCategories):
                 Content.shared.categories = downloadedCategories
-                self.categoryFilterViewModel = CategoryFilterVm(apiService: self.apiService, categoryList: Content.shared.categories)
+                self.categoryFilterViewModel = CategoryFilterVm(categoryList: Content.shared.categories)
                 self.fetchAds()
             case .wrongDownload :
                 self.alertMessage.value = "Erreur pendant le téléchargement des catégories d'annonce. \nVérifiez votre connexion à Internet."

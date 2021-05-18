@@ -16,14 +16,11 @@ protocol CategoryFilterVmProtocol : AnyObject {
 }
 
 class CategoryFilterVm : CategoryFilterVmProtocol {
-
-    private let apiService: ApiServiceProtocol
     private var categories : [Category]
     private(set) var choices : Observable<[String]>
     private(set) var selectedCategory : Observable<Category?>
 
-    init(apiService: ApiServiceProtocol = ApiService(), categoryList : [Category]) {
-        self.apiService = apiService
+    init(categoryList : [Category]) {
         self.categories = []
         self.choices = Observable<[String]>(initialValue: [])
         self.selectedCategory = Observable<Category?>(initialValue: nil)

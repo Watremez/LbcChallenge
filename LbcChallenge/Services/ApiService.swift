@@ -45,7 +45,13 @@ class ApiService: ApiServiceProtocol {
     }
     private func downloadData(from url: URL, completion: @escaping (DownloadStatus) -> ()) {
         getData(from: url) { data, response, error in
-            guard let data = data, error == nil else {
+            guard
+                let data = data,
+                error == nil,
+                response != nil,
+                let statusCode = (response as? HTTPURLResponse)?.statusCode,
+                statusCode == 200
+            else {
                 completion(.error)
                 return
             }
