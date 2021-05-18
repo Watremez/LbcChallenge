@@ -56,43 +56,27 @@ class CategoryFilterV : UIView {
         self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[categoryPicker]|", options: [], metrics: nil, views: viewsDict))
 
         self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[selectedCategory]-[categoryPicker]", options: [], metrics: nil, views: viewsDict))
-        
-//        picker.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor).isActive = true
-//        picker.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor).isActive = true
-//        picker.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
     
     func setup(withCategoryFilterViewModel vm : CategoryFilterVmProtocol) {
         self.vm = vm
         guard let viewModel = self.vm else { return }
-        self.vm!.categories.valueChanged = { _ in
+        self.vm!.choices.valueChanged = { _ in
             self.picker.reloadAllComponents()
-        }
-        self.vm!.selectedCategory.valueChanged = { maybeNewlySelectedCategory in
             self.updateSelectedCategory()
         }
-        if viewModel.categories.loaded {
-            self.picker.reloadAllComponents()
-        }
-        if viewModel.selectedCategory.loaded {
+        self.vm!.selectedCategory.valueChanged = { _ in
             self.updateSelectedCategory()
         }
+        if viewModel.choices.loaded {
+            self.picker.reloadAllComponents()
+        }
+        self.updateSelectedCategory()
     }
     
     func updateSelectedCategory() {
         guard let viewModel = self.vm else { return }
-        var bPickedPresetDone : Bool = false
-        viewModel.selectedCategory.value.map { cat in
-            if let index = viewModel.categories.value.firstIndex(where: { oneCategory in
-                oneCategory.id == cat.id
-            }) {
-                picker.selectRow(index + 1, inComponent: 0, animated: false)
-                bPickedPresetDone = true
-            }
-        }
-        if !bPickedPresetDone {
-            picker.selectRow(0, inComponent: 0, animated: false)
-        }
+        picker.selectRow(viewModel.getSelectedCategoryIndex(), inComponent: 0, animated: false)
     }
     
     
@@ -109,16 +93,12 @@ extension CategoryFilterV : UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         guard let viewModel = self.vm else { return 0 }
-        return viewModel.categories.value.count + 1
+        return viewModel.choices.value.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         guard let viewModel = self.vm else { return nil }
-        if row == 0 {
-            return "Toutes les catégories"
-        } else {
-            return viewModel.categories.value[row-1].name
-        }
+        return viewModel.choices.value[row]
     }
     
 }
