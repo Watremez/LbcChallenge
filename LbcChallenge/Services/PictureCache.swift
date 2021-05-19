@@ -9,14 +9,9 @@ import Foundation
 import UIKit
 
 
-enum PictureDownloadError : Error {
-    case pictureUrlNotCorrectlyConstructed
-    case receivedImageNotValid
-}
-
 enum PictureCacheStatus {
     case downloaded(UIImage)
-    case error(PictureDownloadError)
+    case error // Defined as it is right now, "error" is not really necessary. Could be upgraded to embed another enum that would describe the specific error so when we'll try to get this same image again, we will be able to decide if we try another download or if we stop trying... depending on the previous error we got.
 }
 
 // This class is for being used with the singleton "library". (and also for some default images)
@@ -30,7 +25,8 @@ class PictureCache {
     static var downloadError = UIImage(named: "DownloadError")!
 
     private var pictures = [String : PictureCacheStatus]()
-    
+    private let concurrentQueue : DispatchQueue = DispatchQueue(label: "com.jbw.LbcChallenge.concurrentQueue", attributes: .concurrent)
+
     private init(){
         
     }
@@ -39,34 +35,39 @@ class PictureCache {
 
         guard let urlString = pictureUrl else {
             // If no pictureUrl has been provided,
-            // then return default image and save nothing.
+            // then return default noImage and save nothing.
             updateImage(Self.noImage)
             return 
-//            return Self.noImage
         }
         
-        // We have now a valid picture URL.
-// It sometimes crashes here. I guess it is something related to multitasking shared resource access (pictures dictionary).
-// I hadn't enought time to investigate the problem so I simply skipped the caching part itself. The PictureCache class still provide images on demand. It simply re-download them everytime.
+        // We have now a picture url (supposedly a valid one until now).
         // Let's check if it has already been requested before.
-//        if let status = pictures[urlString] {
-//            // The picture has already been requested before.
-//            switch status {
-//            case .downloaded(let image):
-//                return image
-//            case .error:
-//                return Self.defaultImage
-//            // Pas de cas default: de sorte que si dans le futur je rajoute un cas, je ne puisse pas oublier de le traiter ici.
-//            }
-//        }
+        var st : PictureCacheStatus? = nil
+        concurrentQueue.sync(flags: .barrier) {[weak self] in
+            guard let self = self else { return }
+            st = self.pictures[urlString]
+        }
+        if let status = st {
+            // The picture has already been requested before.
+            if case .downloaded(let previouslyDownloadedImage) = status {
+                // The previous download was successful.
+                updateImage(previouslyDownloadedImage)
+                return
+            }
+        }
         
         
         // The picture has never been requested before.
+        // or
+        // The previous picture download failed.
+        // Anyway, let's try to download this image (maybe again).
         let api = apiService ?? ApiService()
-        api.downloadImage(from: urlString) { result in
-            switch result {
-            case .success(let image) :
-                updateImage(image)
+        api.downloadImage(from: urlString) { downloadImageResult in
+            var res : PictureCacheStatus = .error
+            switch downloadImageResult {
+            case .success(let successfullyDownloadedImage) :
+                res = .downloaded(successfullyDownloadedImage)
+                updateImage(successfullyDownloadedImage)
             case .wrongImageFormat:
                 updateImage(Self.brokenImage)
             case .wrongUrlFormat:
@@ -76,11 +77,13 @@ class PictureCache {
             default:
                 // All cases for downloadImage have been treated.
                 // Something might be improved here since we must detect by ourselves which status can be returned...
-                break
+                updateImage(Self.defaultImage)
+            }
+            self.concurrentQueue.sync(flags: .barrier) {[weak self] in
+                guard let self = self else { return }
+                self.pictures[urlString] = res
             }
         }
-        
-//        return Self.defaultImage
     }
     
 }
