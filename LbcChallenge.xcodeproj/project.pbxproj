@@ -41,6 +41,11 @@
 		91E43BE62656424A008E79D8 /* UIImageView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E43BE52656424A008E79D8 /* UIImageView+Ext.swift */; };
 		91E43BE82656A831008E79D8 /* CategoryFilterCellVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E43BE72656A831008E79D8 /* CategoryFilterCellVm.swift */; };
 		91E43BEA2656ABFA008E79D8 /* CategoryFilterCellV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E43BE92656ABFA008E79D8 /* CategoryFilterCellV.swift */; };
+		91E43BEB2656B897008E79D8 /* UIImageView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E43BE52656424A008E79D8 /* UIImageView+Ext.swift */; };
+		91E43BEC2656B89A008E79D8 /* CategoryFilterCellV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E43BE92656ABFA008E79D8 /* CategoryFilterCellV.swift */; };
+		91E43BED2656B89A008E79D8 /* SelectedCategoryV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E43BE3265531C2008E79D8 /* SelectedCategoryV.swift */; };
+		91E43BEE2656B8A0008E79D8 /* SelectedCategoryVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E43BE126552FBD008E79D8 /* SelectedCategoryVm.swift */; };
+		91E43BEF2656B8A0008E79D8 /* CategoryFilterCellVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E43BE72656A831008E79D8 /* CategoryFilterCellVm.swift */; };
 		91E59EC52649969D0073319B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E59EC42649969D0073319B /* AppDelegate.swift */; };
 		91E59EC72649969D0073319B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E59EC62649969D0073319B /* SceneDelegate.swift */; };
 		91E59EC92649969D0073319B /* AdTableVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E59EC82649969D0073319B /* AdTableVc.swift */; };
@@ -329,6 +334,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91E43BEB2656B897008E79D8 /* UIImageView+Ext.swift in Sources */,
 				91212DD72653C662005847AB /* AppDelegate.swift in Sources */,
 				91212DC92653C655005847AB /* CategoryFilterVm.swift in Sources */,
 				91212DC22653C613005847AB /* CategoryFilterVmUt.swift in Sources */,
@@ -337,8 +343,10 @@
 				91212DC62653C64E005847AB /* Category.swift in Sources */,
 				91212DD82653C662005847AB /* SceneDelegate.swift in Sources */,
 				91212DD22653C65C005847AB /* CategoryFilterV.swift in Sources */,
+				91E43BED2656B89A008E79D8 /* SelectedCategoryV.swift in Sources */,
 				91212DD02653C65C005847AB /* AdDetailV.swift in Sources */,
 				91E43BE02653C992008E79D8 /* ApiServiceUt.swift in Sources */,
+				91E43BEF2656B8A0008E79D8 /* CategoryFilterCellVm.swift in Sources */,
 				91212DD32653C65F005847AB /* PictureCache.swift in Sources */,
 				91212DC32653C64E005847AB /* ImageUrls.swift in Sources */,
 				91212DC72653C655005847AB /* AdListVm.swift in Sources */,
@@ -348,9 +356,11 @@
 				91212DCD2653C659005847AB /* AdTableVc.swift in Sources */,
 				91212DC82653C655005847AB /* AdCellVm.swift in Sources */,
 				91212DD42653C65F005847AB /* ApiService.swift in Sources */,
+				91E43BEE2656B8A0008E79D8 /* SelectedCategoryVm.swift in Sources */,
 				91212DCC2653C659005847AB /* CategoryFilterVc.swift in Sources */,
 				91212DC52653C64E005847AB /* Content.swift in Sources */,
 				91212DCF2653C659005847AB /* AdDetailVc.swift in Sources */,
+				91E43BEC2656B89A008E79D8 /* CategoryFilterCellV.swift in Sources */,
 				91212DCE2653C659005847AB /* SplitVc.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
