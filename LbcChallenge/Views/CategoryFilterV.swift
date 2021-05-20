@@ -15,7 +15,7 @@ class CategoryFilterV : UIView {
     private var picker : UIPickerView!
     
     // Members
-    private weak var vm : CategoryFilterVmProtocol? = nil
+    private var vm : CategoryFilterVmProtocol? = nil
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -61,11 +61,11 @@ class CategoryFilterV : UIView {
     func setup(withCategoryFilterViewModel vm : CategoryFilterVmProtocol) {
         self.vm = vm
         guard let viewModel = self.vm else { return }
-        self.vm!.choices.valueChanged = { _ in
+        viewModel.choices.valueChanged = { _ in
             self.picker.reloadAllComponents()
             self.updateSelectedCategory()
         }
-        self.vm!.selectedCategory.valueChanged = { _ in
+        viewModel.selectedCategory.valueChanged = { _ in
             self.updateSelectedCategory()
         }
         if viewModel.choices.loaded {

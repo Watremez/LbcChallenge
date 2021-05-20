@@ -32,11 +32,13 @@
 		91212DD22653C65C005847AB /* CategoryFilterV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75C24264EB50C00D3CB33 /* CategoryFilterV.swift */; };
 		91212DD32653C65F005847AB /* PictureCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75BD7264BB1C800D3CB33 /* PictureCache.swift */; };
 		91212DD42653C65F005847AB /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E59EEF264A91E40073319B /* ApiService.swift */; };
-		91212DD52653C65F005847AB /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75BDF264BFB5900D3CB33 /* Notification.swift */; };
 		91212DD62653C65F005847AB /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91212D72264FF782005847AB /* Observable.swift */; };
 		91212DD72653C662005847AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E59EC42649969D0073319B /* AppDelegate.swift */; };
 		91212DD82653C662005847AB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E59EC62649969D0073319B /* SceneDelegate.swift */; };
 		91E43BE02653C992008E79D8 /* ApiServiceUt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E43BDF2653C992008E79D8 /* ApiServiceUt.swift */; };
+		91E43BE226552FBD008E79D8 /* SelectedCategoryVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E43BE126552FBD008E79D8 /* SelectedCategoryVm.swift */; };
+		91E43BE4265531C2008E79D8 /* SelectedCategoryV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E43BE3265531C2008E79D8 /* SelectedCategoryV.swift */; };
+		91E43BE62656424A008E79D8 /* UIImageView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E43BE52656424A008E79D8 /* UIImageView+Ext.swift */; };
 		91E59EC52649969D0073319B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E59EC42649969D0073319B /* AppDelegate.swift */; };
 		91E59EC72649969D0073319B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E59EC62649969D0073319B /* SceneDelegate.swift */; };
 		91E59EC92649969D0073319B /* AdTableVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E59EC82649969D0073319B /* AdTableVc.swift */; };
@@ -49,7 +51,6 @@
 		91F75BD8264BB1C800D3CB33 /* PictureCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75BD7264BB1C800D3CB33 /* PictureCache.swift */; };
 		91F75BDA264BCEB300D3CB33 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75BD9264BCEB300D3CB33 /* Category.swift */; };
 		91F75BDC264BD89B00D3CB33 /* Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75BDB264BD89B00D3CB33 /* Content.swift */; };
-		91F75BE0264BFB5900D3CB33 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75BDF264BFB5900D3CB33 /* Notification.swift */; };
 		91F75C0F264D1E0C00D3CB33 /* SplitVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75C0E264D1E0C00D3CB33 /* SplitVc.swift */; };
 		91F75C11264D1E8600D3CB33 /* AdDetailVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75C10264D1E8600D3CB33 /* AdDetailVc.swift */; };
 		91F75C15264D26E500D3CB33 /* AdDetailV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F75C14264D26E500D3CB33 /* AdDetailV.swift */; };
@@ -78,6 +79,9 @@
 		91212DBB2653C582005847AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		91212DC12653C613005847AB /* CategoryFilterVmUt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFilterVmUt.swift; sourceTree = "<group>"; };
 		91E43BDF2653C992008E79D8 /* ApiServiceUt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiServiceUt.swift; sourceTree = "<group>"; };
+		91E43BE126552FBD008E79D8 /* SelectedCategoryVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedCategoryVm.swift; sourceTree = "<group>"; };
+		91E43BE3265531C2008E79D8 /* SelectedCategoryV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedCategoryV.swift; sourceTree = "<group>"; };
+		91E43BE52656424A008E79D8 /* UIImageView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Ext.swift"; sourceTree = "<group>"; };
 		91E59EC12649969D0073319B /* LbcChallenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LbcChallenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91E59EC42649969D0073319B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		91E59EC62649969D0073319B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -92,7 +96,6 @@
 		91F75BD7264BB1C800D3CB33 /* PictureCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureCache.swift; sourceTree = "<group>"; };
 		91F75BD9264BCEB300D3CB33 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		91F75BDB264BD89B00D3CB33 /* Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Content.swift; sourceTree = "<group>"; };
-		91F75BDF264BFB5900D3CB33 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		91F75C0E264D1E0C00D3CB33 /* SplitVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitVc.swift; sourceTree = "<group>"; };
 		91F75C10264D1E8600D3CB33 /* AdDetailVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdDetailVc.swift; sourceTree = "<group>"; };
 		91F75C14264D26E500D3CB33 /* AdDetailV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdDetailV.swift; sourceTree = "<group>"; };
@@ -193,6 +196,7 @@
 				91212D7826501D10005847AB /* AdCellVm.swift */,
 				91212D7A2650F984005847AB /* AdDetailVm.swift */,
 				91212D7C265155AC005847AB /* CategoryFilterVm.swift */,
+				91E43BE126552FBD008E79D8 /* SelectedCategoryVm.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -203,6 +207,7 @@
 				91E59ED8264A60C60073319B /* AdCellV.swift */,
 				91F75C14264D26E500D3CB33 /* AdDetailV.swift */,
 				91F75C24264EB50C00D3CB33 /* CategoryFilterV.swift */,
+				91E43BE3265531C2008E79D8 /* SelectedCategoryV.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -212,8 +217,8 @@
 			children = (
 				91E59EEF264A91E40073319B /* ApiService.swift */,
 				91F75BD7264BB1C800D3CB33 /* PictureCache.swift */,
-				91F75BDF264BFB5900D3CB33 /* Notification.swift */,
 				91212D72264FF782005847AB /* Observable.swift */,
+				91E43BE52656424A008E79D8 /* UIImageView+Ext.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -338,7 +343,6 @@
 				91212DC82653C655005847AB /* AdCellVm.swift in Sources */,
 				91212DD42653C65F005847AB /* ApiService.swift in Sources */,
 				91212DCC2653C659005847AB /* CategoryFilterVc.swift in Sources */,
-				91212DD52653C65F005847AB /* Notification.swift in Sources */,
 				91212DC52653C64E005847AB /* Content.swift in Sources */,
 				91212DCF2653C659005847AB /* AdDetailVc.swift in Sources */,
 				91212DCE2653C659005847AB /* SplitVc.swift in Sources */,
@@ -358,12 +362,13 @@
 				91E59EE1264A7BB90073319B /* ImageUrls.swift in Sources */,
 				91E59ED9264A60C70073319B /* AdCellV.swift in Sources */,
 				91F75C0F264D1E0C00D3CB33 /* SplitVc.swift in Sources */,
+				91E43BE226552FBD008E79D8 /* SelectedCategoryVm.swift in Sources */,
 				91E59EC92649969D0073319B /* AdTableVc.swift in Sources */,
 				91E59EE3264A7C7E0073319B /* Ad.swift in Sources */,
 				91F75C11264D1E8600D3CB33 /* AdDetailVc.swift in Sources */,
 				91F75BDC264BD89B00D3CB33 /* Content.swift in Sources */,
-				91F75BE0264BFB5900D3CB33 /* Notification.swift in Sources */,
 				91E59EC52649969D0073319B /* AppDelegate.swift in Sources */,
+				91E43BE62656424A008E79D8 /* UIImageView+Ext.swift in Sources */,
 				91212D7B2650F984005847AB /* AdDetailVm.swift in Sources */,
 				91E59EC72649969D0073319B /* SceneDelegate.swift in Sources */,
 				91F75BD8264BB1C800D3CB33 /* PictureCache.swift in Sources */,
@@ -371,6 +376,7 @@
 				91212D75264FF873005847AB /* AppVm.swift in Sources */,
 				91212D7926501D10005847AB /* AdCellVm.swift in Sources */,
 				91F75BDA264BCEB300D3CB33 /* Category.swift in Sources */,
+				91E43BE4265531C2008E79D8 /* SelectedCategoryV.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

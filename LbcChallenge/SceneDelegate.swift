@@ -28,15 +28,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
         window?.overrideUserInterfaceStyle = .light
+        window?.tintColor = UIColor.orange
 
         var mainViewController : SplitVc
         mainViewController = SplitVc()
         mainViewController.setup(withAppViewModel: AppVm(apiService: ApiService(), domainUrlString: "https://raw.githubusercontent.com/leboncoin/paperclip/master/"))
 
         let master = UINavigationController()
-        let detail = UINavigationController()
         master.viewControllers = [AdTableVc()]
+
+        let detail = UINavigationController()
         detail.viewControllers = [AdDetailVc()]
+
         mainViewController.viewControllers = [master, detail]
         mainViewController.preferredDisplayMode = .oneBesideSecondary
 

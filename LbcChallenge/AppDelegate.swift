@@ -26,9 +26,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             mainViewController.setup(withAppViewModel: AppVm(apiService: ApiService(), domainUrlString: "https://raw.githubusercontent.com/leboncoin/paperclip/master/"))
 
             let master = UINavigationController()
-            let detail = UINavigationController()
+            master.navigationBar.backgroundColor = UIColor.white
             master.viewControllers = [AdTableVc()]
+
+            let detail = UINavigationController()
+            detail.navigationBar.backgroundColor = UIColor.white
             detail.viewControllers = [AdDetailVc()]
+
             mainViewController.viewControllers = [master, detail]
             mainViewController.preferredDisplayMode = .oneBesideSecondary
 

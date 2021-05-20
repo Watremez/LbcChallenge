@@ -10,15 +10,18 @@ import Foundation
 protocol CategoryFilterVmProtocol : AnyObject {
     var choices : Observable<[String]> { get }
     var selectedCategory : Observable<Category?> { get }
-
+    var onSelectedCategoryChangedClosure : ((Category?)->())? { get set }
+    
     func selectCategory(at row: Int)
     func getSelectedCategoryIndex() -> Int
+    func setSelectedCategory(_ newSelectedCategory : Category?)
 }
 
 class CategoryFilterVm : CategoryFilterVmProtocol {
     private var categories : [Category]
     private(set) var choices : Observable<[String]>
     private(set) var selectedCategory : Observable<Category?>
+    var onSelectedCategoryChangedClosure : ((Category?)->())? = nil
 
     init(categoryList : [Category]) {
         self.categories = []
@@ -40,11 +43,10 @@ class CategoryFilterVm : CategoryFilterVmProtocol {
     
     func selectCategory(at row: Int){
         if row == 0 {
-            self.selectedCategory.value = nil
+            self.setSelectedCategory(nil)
         } else {
-            self.selectedCategory.value = self.categories[row-1]
+            self.setSelectedCategory(self.categories[row - 1])
         }
-        Notification.Name.SelectedCategory.post(object: self.selectedCategory.value)
     }
     
     func getSelectedCategoryIndex() -> Int {
@@ -61,4 +63,8 @@ class CategoryFilterVm : CategoryFilterVmProtocol {
         }
     }
 
+    func setSelectedCategory(_ newSelectedCategory : Category? = nil) {
+        self.selectedCategory.value = newSelectedCategory
+        self.onSelectedCategoryChangedClosure?(self.selectedCategory.value)
+    }
 }

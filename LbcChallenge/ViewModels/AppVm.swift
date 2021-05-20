@@ -14,6 +14,8 @@ protocol AppVmProtocol {
     var categoryFilterViewModel : CategoryFilterVmProtocol? { get }
     
     func initFetch()
+    func selectedCategoryChanged(newSelectedCategory : Category?)
+    func getSelectedCategoryViewModel() -> SelectedCategoryVmProtocol?
 }
 
 class AppVm : AppVmProtocol {
@@ -31,18 +33,17 @@ class AppVm : AppVmProtocol {
         }
         self.appIsLoading = Observable<Bool>(initialValue: false)
         self.alertMessage = Observable<String?>(initialValue: nil)
-        
-        Notification.Name.SelectedCategory.onNotified { [weak self] note in
-            guard let `self` = self else { return }
-            if let obj = note.object {
-                if obj is Category? {
-                    let selectedCategory = obj as! Category?
-                    self.adListViewModel?.processFetchedAds(downloadedAds: Content.shared.ads, filterOnCategory: selectedCategory)
-                    return
-                }
-            }
-            self.adListViewModel?.processFetchedAds(downloadedAds: Content.shared.ads, filterOnCategory: nil)
-        }
+//        Notification.Name.SelectedCategory.onNotified { [weak self] note in
+//            guard let `self` = self else { return }
+//            if let obj = note.object {
+//                if obj is Category? {
+//                    let selectedCategory = obj as! Category?
+//                    self.selecteCategoryChanged(newSelectedCategory: selectedCategory)
+//                    return
+//                }
+//            }
+//            self.selecteCategoryChanged(newSelectedCategory: nil)
+//        }
 
     }
     
@@ -54,6 +55,7 @@ class AppVm : AppVmProtocol {
             case .success(let downloadedCategories):
                 Content.shared.categories = downloadedCategories
                 self.categoryFilterViewModel = CategoryFilterVm(categoryList: Content.shared.categories)
+                self.categoryFilterViewModel!.onSelectedCategoryChangedClosure = self.selectedCategoryChanged
                 self.fetchAds()
             case .wrongDownload :
                 self.alertMessage.value = "Erreur pendant le téléchargement des catégories d'annonce. \nVérifiez votre connexion à Internet."
@@ -85,6 +87,21 @@ class AppVm : AppVmProtocol {
                 self.alertMessage.value = "Erreur de chargement des annonces."
             }
         }
+    }
+
+    func selectedCategoryChanged(newSelectedCategory : Category?){
+        self.adListViewModel?.processFetchedAds(downloadedAds: Content.shared.ads, filterOnCategory: newSelectedCategory)
+    }
+    
+    func getSelectedCategoryViewModel() -> SelectedCategoryVmProtocol? {
+        guard
+            let catFilterVm = self.categoryFilterViewModel,
+            let selCat = catFilterVm.selectedCategory.value
+        else { return nil }
+
+        return SelectedCategoryVm(selectedCategory: selCat, onRemoveTouchUp: {
+            catFilterVm.setSelectedCategory(nil)
+        })
     }
 
 }

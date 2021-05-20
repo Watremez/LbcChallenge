@@ -22,7 +22,11 @@ class SplitVc : UISplitViewController {
             if appLoadingStatus == false {
                 guard let navVc = (self.viewControllers[0] as? UINavigationController) else { return }
                 guard let adTableVc = (navVc.viewControllers[0] as? AdTableVc) else { return }
-                adTableVc.setup(withAdListViewModel: self.appVm.adListViewModel!, andCategoryFilterViewModel: self.appVm.categoryFilterViewModel!)
+                adTableVc.setup(
+                    adListViewModel: self.appVm.adListViewModel!,
+                    categoryFilterViewModel: self.appVm.categoryFilterViewModel!,
+                    whereToGetSelectedCategoryViewModel: self.appVm.getSelectedCategoryViewModel
+                )
             }
         }
         appVm.alertMessage.valueChanged = { message in

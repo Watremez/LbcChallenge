@@ -13,7 +13,7 @@ class CategoryFilterVc: UIViewController {
     var categoryFilterV : CategoryFilterV!
     var safeArea: UILayoutGuide!
     
-    private weak var vm : CategoryFilterVmProtocol? = nil
+    private var vm : CategoryFilterVmProtocol? = nil
 
     override func viewWillAppear(_ animated: Bool) {
         self.title = "Filtrer les catégories d'annonces"

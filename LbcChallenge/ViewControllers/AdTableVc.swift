@@ -15,6 +15,7 @@ class AdTableVc: UIViewController {
 
     private var adListVm : AdListVmProtocol? = nil
     private var categoryFilterVm : CategoryFilterVmProtocol? = nil
+    private var whereToGetSelectedCategoryVm : (() -> SelectedCategoryVmProtocol?)? = nil
 
     override func loadView() {
         super.loadView()
@@ -25,19 +26,23 @@ class AdTableVc: UIViewController {
         setupPlacement()
     }
     
-    func setup(withAdListViewModel adListVm : AdListVmProtocol, andCategoryFilterViewModel categoryFilterVm : CategoryFilterVmProtocol) {
+    func setup(adListViewModel adListVm : AdListVmProtocol, categoryFilterViewModel categoryFilterVm : CategoryFilterVmProtocol, whereToGetSelectedCategoryViewModel whereToGetSelectedCategoryVm : @escaping () -> SelectedCategoryVmProtocol?) {
         self.adListVm = adListVm
         self.adListVm!.reloadTableViewClosure = {
             self.tableView.reloadData()
+            self.setupSelectedCategoryBarButton()
         }
         self.tableView.reloadData()
+        
         self.categoryFilterVm = categoryFilterVm
+        
+        self.whereToGetSelectedCategoryVm = whereToGetSelectedCategoryVm
     }
 
     @objc func OnFliterClick(){
-        guard let catVm = self.categoryFilterVm else { return }
+        guard let catFilterVm = self.categoryFilterVm else { return }
         let vc = CategoryFilterVc()
-        vc.setup(withCategoryFilterViewModel: catVm)
+        vc.setup(withCategoryFilterViewModel: catFilterVm)
         let nc = UINavigationController()
         nc.viewControllers = [vc]
         self.showDetailViewController(nc, sender: self)
@@ -56,6 +61,18 @@ class AdTableVc: UIViewController {
     func setupNavigationBar() {
         let btnFiltrer = UIBarButtonItem(title: "Filtrer", style: .plain, target: self, action: #selector(OnFliterClick))
         navigationItem.rightBarButtonItem = btnFiltrer
+    }
+    
+    func setupSelectedCategoryBarButton(){
+        if let getVm = self.whereToGetSelectedCategoryVm {
+            if let selCatVm = getVm() {
+                let selectedCategoryView = SelectedCategoryV()
+                selectedCategoryView.setup(withSelectedCategoryViewModel: selCatVm)
+                navigationItem.leftBarButtonItem = UIBarButtonItem(customView: selectedCategoryView)
+                return
+            }
+        }
+        navigationItem.leftBarButtonItem = nil
     }
 
     
