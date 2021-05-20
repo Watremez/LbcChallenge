@@ -11,9 +11,9 @@ import UIKit
 
 class CategoryFilterV : UIView {
     // Outlets
-    private var lblSelectedCategory : UILabel!
-    private var picker : UIPickerView!
-    
+    private var lblTitle : UILabel!
+    var tableView : UITableView!
+
     // Members
     private var vm : CategoryFilterVmProtocol? = nil
     
@@ -24,94 +24,92 @@ class CategoryFilterV : UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLblSelectedCategory()
-        setupCategorySelectionPicker()
+        setupTableView()
         setupPlacement()
     }
     
     func setupLblSelectedCategory(){
-        lblSelectedCategory = UILabel()
-        lblSelectedCategory.numberOfLines = 0
-        lblSelectedCategory.lineBreakMode = .byWordWrapping
-        lblSelectedCategory.text = "Afficher les annonces du type : "
-        self.addSubview(lblSelectedCategory)
-        lblSelectedCategory.translatesAutoresizingMaskIntoConstraints = false
+        lblTitle = UILabel()
+        lblTitle.numberOfLines = 0
+        lblTitle.lineBreakMode = .byWordWrapping
+        lblTitle.text = "Catégories"
+        lblTitle.font = UIFont.preferredFont(forTextStyle: .headline)
+        self.addSubview(lblTitle)
+        lblTitle.translatesAutoresizingMaskIntoConstraints = false
     }
     
-    func setupCategorySelectionPicker(){
-        picker = UIPickerView()
-        self.picker.dataSource = self
-        self.picker.delegate = self
-        self.addSubview(picker)
-        picker.translatesAutoresizingMaskIntoConstraints = false
+    func setupTableView() {
+        tableView = UITableView()
+        tableView.dataSource = self
+        tableView.delegate = self
+        self.addSubview(tableView)
+        tableView.register(CategoryFilterCellV.self, forCellReuseIdentifier: "categoryFilterCell")
+        tableView.translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
     
     func setupPlacement() {
         let viewsDict : [String : Any] = [
-            "selectedCategory" : (lblSelectedCategory as Any),
-            "categoryPicker" : (picker as Any)
+            "title" : (lblTitle as Any),
+            "tableView" : (tableView as Any)
         ]
         
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[selectedCategory]|", options: [], metrics: nil, views: viewsDict))
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[categoryPicker]|", options: [], metrics: nil, views: viewsDict))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[title]|", options: [], metrics: nil, views: viewsDict))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[tableView]|", options: [], metrics: nil, views: viewsDict))
 
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[selectedCategory]-[categoryPicker]", options: [], metrics: nil, views: viewsDict))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-30-[title]-[tableView]-|", options: [], metrics: nil, views: viewsDict))
     }
     
     func setup(withCategoryFilterViewModel vm : CategoryFilterVmProtocol) {
         self.vm = vm
         guard let viewModel = self.vm else { return }
         viewModel.choices.valueChanged = { _ in
-            self.picker.reloadAllComponents()
-            self.updateSelectedCategory()
-        }
-        viewModel.selectedCategory.valueChanged = { _ in
-            self.updateSelectedCategory()
+            self.tableView.reloadData()
         }
         if viewModel.choices.loaded {
-            self.picker.reloadAllComponents()
+            self.tableView.reloadData()
         }
-        self.updateSelectedCategory()
-    }
-    
-    func updateSelectedCategory() {
-        guard let viewModel = self.vm else { return }
-        picker.selectRow(viewModel.getSelectedCategoryIndex(), inComponent: 0, animated: false)
     }
     
     
 }
 
 
-// MARK: - UIPickerViewDataSource
 
-extension CategoryFilterV : UIPickerViewDataSource {
+// MARK:  - UITableViewDataSource
+
+
+extension CategoryFilterV : UITableViewDataSource {
     
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let viewModel = self.vm else { return 0 }
         return viewModel.choices.value.count
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        guard let viewModel = self.vm else { return nil }
-        return viewModel.choices.value[row]
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let viewModel = self.vm else { return UITableViewCell() }
+        let adCategoryFilterCellV = tableView.dequeueReusableCell(withIdentifier: "categoryFilterCell", for: indexPath) as! CategoryFilterCellV
+        let vm = viewModel.getCategoryFilterCellViewModel(at: indexPath.row)
+        adCategoryFilterCellV.setup(withCategoryFilterCellViewModel: vm)
+        return adCategoryFilterCellV
     }
     
 }
 
 
-// MARK: - UIPickerViewDelegate
+// MARK: - UITableViewDelegate
 
-extension CategoryFilterV : UIPickerViewDelegate {
+
+extension CategoryFilterV : UITableViewDelegate {
     
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let viewModel = self.vm else { return }
-        viewModel.selectCategory(at: row)
+        viewModel.selectCategory(at: indexPath.row)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
-    
-}
 
+}

@@ -16,7 +16,7 @@ class CategoryFilterVc: UIViewController {
     private var vm : CategoryFilterVmProtocol? = nil
 
     override func viewWillAppear(_ animated: Bool) {
-        self.title = "Filtrer les catégories d'annonces"
+        self.title = "Rechercher"
         self.view.backgroundColor = UIColor.white
 
         setupView()

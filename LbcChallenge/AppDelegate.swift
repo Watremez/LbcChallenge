@@ -20,7 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         } else {
             window = UIWindow(frame: UIScreen.main.bounds)
-            
+            window?.tintColor = UIColor.orange
+
             var mainViewController : SplitVc
             mainViewController = SplitVc()
             mainViewController.setup(withAppViewModel: AppVm(apiService: ApiService(), domainUrlString: "https://raw.githubusercontent.com/leboncoin/paperclip/master/"))
